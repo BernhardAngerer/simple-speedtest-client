@@ -32,3 +32,5 @@ Called from Java:
 // Can take up to 30 seconds:
 SpeedtestResult result = SpeedtestController.runSpeedTest();
 ```
+#### How to add project dependency to Maven or Gradle:
+https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/1.0.0
