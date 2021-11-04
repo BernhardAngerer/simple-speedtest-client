@@ -36,14 +36,14 @@ public class LatencyService {
     }
   }
 
-  public static List<LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
+  public static Map<Server, LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
     if (serverMap != null && !serverMap.isEmpty()) {
       final int testsPerServer = Integer.parseInt(Util.getConfigProperty("Latency.testsPerServer.maxNumber"));
-      final List<LatencyTestResult> results = new ArrayList<>();
+      final Map<Server, LatencyTestResult> results = new HashMap<>();
       for (Entry<Double, Server> entry : serverMap.entrySet()) {
         if (entry != null) {
           try {
-            results.add(new LatencyTestResult(entry.getValue(), calculateAverage(
+            results.put(entry.getValue(), new LatencyTestResult(calculateAverage(
                 testLatency(entry.getValue().getUrl(), testsPerServer)), entry.getKey()));
           } catch (ServerRequestException | MissingResultException e) {
             logger.error(e.getMessage(), e);
@@ -53,17 +53,17 @@ public class LatencyService {
       if (!results.isEmpty()) {
         return results;
       } else {
-        throw new MissingResultException("Empty list for latency tests");
+        throw new MissingResultException("Empty map for latency tests");
       }
     } else {
       throw new IllegalArgumentException();
     }
   }
 
-  public static LatencyTestResult getFastestServer(Map<Double, Server> serverMap, DistanceUnit distanceUnit) throws MissingResultException {
+  public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap, DistanceUnit distanceUnit) throws MissingResultException {
     if (serverMap != null && distanceUnit != null && !serverMap.isEmpty()) {
-      return findServerLatencies(serverMap).stream()
-          .min(Comparator.comparing(LatencyTestResult::getLatency))
+      return findServerLatencies(serverMap).entrySet().stream()
+          .min(Comparator.comparing(o -> o.getValue().getLatency()))
           .orElseThrow(MissingResultException::new);
     } else {
       throw new IllegalArgumentException();

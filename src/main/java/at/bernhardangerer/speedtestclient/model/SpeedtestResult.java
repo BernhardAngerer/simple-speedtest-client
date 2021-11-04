@@ -2,13 +2,17 @@ package at.bernhardangerer.speedtestclient.model;
 
 public class SpeedtestResult {
   private long timestamp;
+  private Client client;
+  private Server server;
   private LatencyTestResult latency;
   private TransferTestResult download;
   private TransferTestResult upload;
   private String shareURL;
 
-  public SpeedtestResult(long timestamp, LatencyTestResult latency, TransferTestResult download, TransferTestResult upload, String shareURL) {
+  public SpeedtestResult(long timestamp, Client client, Server server, LatencyTestResult latency, TransferTestResult download, TransferTestResult upload, String shareURL) {
     this.timestamp = timestamp;
+    this.client = client;
+    this.server = server;
     this.latency = latency;
     this.download = download;
     this.upload = upload;
@@ -21,6 +25,22 @@ public class SpeedtestResult {
 
   public void setTimestamp(long timestamp) {
     this.timestamp = timestamp;
+  }
+
+  public Client getClient() {
+    return client;
+  }
+
+  public void setClient(Client client) {
+    this.client = client;
+  }
+
+  public Server getServer() {
+    return server;
+  }
+
+  public void setServer(Server server) {
+    this.server = server;
   }
 
   public LatencyTestResult getLatency() {
@@ -59,10 +79,12 @@ public class SpeedtestResult {
   public String toString() {
     return "SpeedtestResult{" +
         "timestamp=" + timestamp +
+        ", client=" + client +
+        ", server=" + server +
         ", latency=" + latency +
         ", download=" + download +
         ", upload=" + upload +
-        ", shareURL=" + shareURL +
+        ", shareURL='" + shareURL + '\'' +
         '}';
   }
 

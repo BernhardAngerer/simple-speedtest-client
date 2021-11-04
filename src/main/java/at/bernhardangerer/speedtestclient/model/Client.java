@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "client")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ClientSetting {
+public class Client {
 
   @XmlAttribute(name = "ip")
   private String ip;

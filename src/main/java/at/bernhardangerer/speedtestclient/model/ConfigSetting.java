@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ConfigSetting {
 
   @XmlElement(name = "client")
-  private ClientSetting client = null;
+  private Client client = null;
 
   @XmlElement(name = "download")
   private DownloadSetting download = null;
@@ -18,11 +18,11 @@ public class ConfigSetting {
   @XmlElement(name = "upload")
   private UploadSetting upload = null;
 
-  public ClientSetting getClient() {
+  public Client getClient() {
     return client;
   }
 
-  public void setClient(ClientSetting client) {
+  public void setClient(Client client) {
     this.client = client;
   }
 

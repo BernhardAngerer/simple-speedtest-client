@@ -32,7 +32,7 @@ public class LatencyServiceIT {
     servers.put(4D, new Server("http://speedtest.microsystem.hu:8080/speedtest/upload.php", 47.7100, 17.6800, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 4, "gyor-speedtest.zt.hu:8080"));
     servers.put(5D, new Server("http://speedtest.szerverplex.hu:8080/speedtest/upload.php", 47.7100, 17.6900, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 5, "gyor-speedtest.zt.hu:8080"));
 
-    List<LatencyTestResult> result = LatencyService.findServerLatencies(servers);
+    Map<Server, LatencyTestResult> result = LatencyService.findServerLatencies(servers);
     Assertions.assertNotNull(result);
     Assertions.assertFalse(result.isEmpty());
     Assertions.assertEquals(5, result.size());
@@ -47,11 +47,11 @@ public class LatencyServiceIT {
     servers.put(4D, new Server("http://speedtest.microsystem.hu:8080/speedtest/upload.php", 47.7100, 17.6800, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 4, "gyor-speedtest.zt.hu:8080"));
     servers.put(5D, new Server("http://speedtest.szerverplex.hu:8080/speedtest/upload.php", 47.7100, 17.6900, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 5, "gyor-speedtest.zt.hu:8080"));
 
-    LatencyTestResult result = LatencyService.getFastestServer(servers, DistanceUnit.KILOMETER);
+    Map.Entry<Server, LatencyTestResult> result = LatencyService.getFastestServer(servers, DistanceUnit.KILOMETER);
     Assertions.assertNotNull(result);
-    Assertions.assertNotNull(result.getServer());
-    Assertions.assertNotNull(result.getLatency());
-    Assertions.assertNotNull(result.getDistance());
+    Assertions.assertNotNull(result.getKey());
+    Assertions.assertNotNull(result.getValue().getLatency());
+    Assertions.assertNotNull(result.getValue().getDistance());
   }
 
 }
