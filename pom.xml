@@ -4,7 +4,7 @@
     <groupId>at.bernhardangerer</groupId>
     <artifactId>simple-speedtest-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.0</version>
     <name>simple-speedtest-client</name>
     <description>simple speedtest client</description>
     <properties>
@@ -124,6 +124,6 @@
         <connection>scm:git:git@github.com:BernhardAngerer/simple-speedtest-client.git</connection>
         <developerConnection>scm:git:git@github.com:BernhardAngerer/simple-speedtest-client.git</developerConnection>
         <url>https://github.com/BernhardAngerer/simple-speedtest-client</url>
-        <tag>HEAD</tag>
+        <tag>2.0.0</tag>
     </scm>
 </project>
