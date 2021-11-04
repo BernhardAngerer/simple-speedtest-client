@@ -63,7 +63,7 @@ public class Util {
     }
   }
 
-  public static double calculateMbitsPerSecond(int bytes, long timeInMs) {
+  public static double calculateMbps(int bytes, long timeInMs) {
     return (bytes * 8.0) / (timeInMs * 1000.0);
   }
 

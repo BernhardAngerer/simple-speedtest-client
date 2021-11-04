@@ -15,14 +15,14 @@ import java.util.Map;
 public class ShareUrlService {
   private final static Logger logger = LogManager.getLogger(ShareUrlService.class);
 
-  public static String createShareURL(int serverId, double latency, double uploadMbitS, double downloadMbitS) throws IOException, MissingResultException, ServerRequestException {
-    if (serverId > 0 && uploadMbitS > 0 && downloadMbitS > 0) {
+  public static String createShareURL(int serverId, double latency, double uploadMbps, double downloadMbps) throws IOException, MissingResultException, ServerRequestException {
+    if (serverId > 0 && uploadMbps > 0 && downloadMbps > 0) {
       int ping = (int) Math.round(latency);
-      int uploadKbitS = (int) Math.round(uploadMbitS * 1000.0d);
-      int downloadKbitS = (int) Math.round(downloadMbitS * 1000.0d);
-      String md5Hash = generateMD5Hash(String.format("%s-%s-%s-%s", ping, uploadKbitS, downloadKbitS, "297aae72"));
+      int uploadKbps = (int) Math.round(uploadMbps * 1000.0d);
+      int downloadKbps = (int) Math.round(downloadMbps * 1000.0d);
+      String md5Hash = generateMD5Hash(String.format("%s-%s-%s-%s", ping, uploadKbps, downloadKbps, "297aae72"));
       String encodedBody = String.format("serverid=%s&hash=%s&ping=%s&download=%s&upload=%s&accuracy=1",
-          serverId, md5Hash, ping, downloadKbitS, uploadKbitS);
+          serverId, md5Hash, ping, downloadKbps, uploadKbps);
       final String result = HttpPostClient.postBodyWithSharedData("https://www.speedtest.net/api/api.php", encodedBody);
       Map<String, String> queryParams = Util.getQueryParams(result);
       if (queryParams.containsKey("resultid") && queryParams.get("resultid") != null) {

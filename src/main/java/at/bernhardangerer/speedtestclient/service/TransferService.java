@@ -31,7 +31,7 @@ public class TransferService {
       }
       final int bytes = results.stream().map(TransferTestResult::getBytes).mapToInt(Integer::intValue).sum();
       final long durationInMs = results.stream().map(TransferTestResult::getDurationInMs).mapToLong(Long::longValue).sum() / threats;
-      return new TransferTestResult(Util.calculateMbitsPerSecond(bytes, durationInMs), bytes, durationInMs);
+      return new TransferTestResult(Util.calculateMbps(bytes, durationInMs), bytes, durationInMs);
     } else {
       throw new IllegalArgumentException();
     }

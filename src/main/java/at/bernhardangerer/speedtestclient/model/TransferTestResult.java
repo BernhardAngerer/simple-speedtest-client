@@ -1,7 +1,7 @@
 package at.bernhardangerer.speedtestclient.model;
 
 public class TransferTestResult {
-  private double rateInMbitS;
+  private double rateInMbps;
   private int bytes;
   private long durationInMs;
 
@@ -10,18 +10,18 @@ public class TransferTestResult {
     this.durationInMs = durationInMs;
   }
 
-  public TransferTestResult(double rateInMbitS, int bytes, long durationInMs) {
-    this.rateInMbitS = rateInMbitS;
+  public TransferTestResult(double rateInMbps, int bytes, long durationInMs) {
+    this.rateInMbps = rateInMbps;
     this.bytes = bytes;
     this.durationInMs = durationInMs;
   }
 
-  public double getRateInMbitS() {
-    return rateInMbitS;
+  public double getRateInMbps() {
+    return rateInMbps;
   }
 
-  public void setRateInMbitS(double rateInMbitS) {
-    this.rateInMbitS = rateInMbitS;
+  public void setRateInMbps(double rateInMbps) {
+    this.rateInMbps = rateInMbps;
   }
 
   public int getBytes() {
@@ -43,7 +43,7 @@ public class TransferTestResult {
   @Override
   public String toString() {
     return "TransferTestResult{" +
-        "mbitPerSecond=" + rateInMbitS +
+        "rateInMbps=" + rateInMbps +
         ", bytes=" + bytes +
         ", durationInMs=" + durationInMs +
         '}';

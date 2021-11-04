@@ -59,7 +59,7 @@ public class SpeedtestController {
           downloadResult = DownloadService.testDownload(fastestServer.getKey().getUrl(),
               configSetting.getDownload(), generateOutput ? Util::printDot : () -> {});
           if (generateOutput) {
-            System.out.printf("\nDownload: %,.2f Mbits/s\n", downloadResult.getRateInMbitS());
+            System.out.printf("\nDownload: %,.2f Mbits/s\n", downloadResult.getRateInMbps());
           }
         }
 
@@ -69,18 +69,18 @@ public class SpeedtestController {
             System.out.print("Testing upload speed");
           }
           uploadResult = UploadService.testUpload(fastestServer.getKey().getUrl(),
-              configSetting.getUpload(), (downloadResult != null && downloadResult.getRateInMbitS() > 0.1) ? 8 :
+              configSetting.getUpload(), (downloadResult != null && downloadResult.getRateInMbps() > 0.1) ? 8 :
                   configSetting.getUpload().getThreads(),
               generateOutput ? Util::printDot : () -> {});
           if (generateOutput) {
-            System.out.printf("\nUpload: %,.2f Mbits/s\n", uploadResult.getRateInMbitS());
+            System.out.printf("\nUpload: %,.2f Mbits/s\n", uploadResult.getRateInMbps());
           }
         }
 
         String shareURL = null;
         if (generateShareURL && uploadResult != null && downloadResult != null) {
           shareURL = ShareUrlService.createShareURL(fastestServer.getKey().getId(), fastestServer.getValue().getLatency(),
-              uploadResult.getRateInMbitS(), downloadResult.getRateInMbitS());
+              uploadResult.getRateInMbps(), downloadResult.getRateInMbps());
           if (generateOutput) {
             System.out.println("Share results: " + shareURL);
           }

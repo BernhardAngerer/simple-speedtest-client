@@ -13,7 +13,7 @@ public class UploadServiceIT {
   	TransferTestResult result = UploadService.testUpload("http://gyor-speedtest.zt.hu:8080/speedtest/upload.php", 
   			new UploadSetting(4, 15, 4, 5), 8, () -> {});
     Assertions.assertNotNull(result);
-    Assertions.assertTrue(result.getRateInMbitS() > 0.0);
+    Assertions.assertTrue(result.getRateInMbps() > 0.0);
     Assertions.assertTrue(result.getBytes() > 0);
     Assertions.assertTrue(result.getDurationInMs() > 0);
   }

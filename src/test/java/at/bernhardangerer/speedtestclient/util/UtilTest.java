@@ -14,8 +14,8 @@ public class UtilTest {
   }
 
   @Test
-  public void calculateMbitsPerSecond() {
-    double result = Util.calculateMbitsPerSecond(1000000, 1000L);
+  public void calculateMbps() {
+    double result = Util.calculateMbps(1000000, 1000L);
     Assertions.assertEquals(8d, result);
   }
 

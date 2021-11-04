@@ -13,7 +13,7 @@ public class DownloadServiceIT {
   	TransferTestResult result = DownloadService.testDownload("http://speedtest.nessus.at:8080/speedtest",
         new DownloadSetting(5, 2), () -> {});
     Assertions.assertNotNull(result);
-    Assertions.assertTrue(result.getRateInMbitS() > 0.0);
+    Assertions.assertTrue(result.getRateInMbps() > 0.0);
     Assertions.assertTrue(result.getBytes() > 0);
     Assertions.assertTrue(result.getDurationInMs() > 0);
   }
