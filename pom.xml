@@ -113,4 +113,11 @@
         <url>https://github.com/BernhardAngerer/simple-speedtest-client</url>
         <tag>HEAD</tag>
     </scm>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/BernhardAngerer/simple-speedtest-client</url>
+        </repository>
+    </distributionManagement>
 </project>
