@@ -17,7 +17,7 @@ mvn clean install
 ### Use CLI:
 Called from command line: 
 ```bash
-java -jar simple-speedtest-client-2.0.1-SNAPSHOT.jar
+java -jar simple-speedtest-client-2.0.2.jar
 ```
 ```bash
 usage: Optional parameters:
@@ -28,7 +28,7 @@ usage: Optional parameters:
 
 Example:
 ```bash
-$ java -jar simple-speedtest-client-2.0.1-SNAPSHOT.jar 
+$ java -jar simple-speedtest-client-2.0.2.jar 
 Retrieving speedtest.net configuration...
 Testing from M247 Ltd (91.132.139.76)...
 Retrieving speedtest.net server list...
@@ -51,4 +51,4 @@ try {
 }
 ```
 #### How to add project dependency to Maven or Gradle:
-https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/2.0.0
+https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/2.0.2
