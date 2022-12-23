@@ -3,10 +3,10 @@ package at.bernhardangerer.speedtestclient.service;
 import at.bernhardangerer.speedtestclient.exception.MissingResultException;
 import at.bernhardangerer.speedtestclient.exception.ServerRequestException;
 import at.bernhardangerer.speedtestclient.util.Util;
+import jakarta.xml.bind.DatatypeConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

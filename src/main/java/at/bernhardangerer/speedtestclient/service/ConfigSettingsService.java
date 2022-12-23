@@ -4,10 +4,10 @@ import at.bernhardangerer.speedtestclient.exception.MissingResultException;
 import at.bernhardangerer.speedtestclient.exception.ParsingException;
 import at.bernhardangerer.speedtestclient.exception.ServerRequestException;
 import at.bernhardangerer.speedtestclient.model.ConfigSetting;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
