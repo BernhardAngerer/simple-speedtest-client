@@ -4,7 +4,7 @@ Java-library and command line interface (CLI) for testing internet bandwidth usi
 A simplified Java-implementation of Matt Martz' speedtest-cli (https://github.com/sivel/speedtest-cli)
 
 ## Technical requirements:
-+ Java 8+
++ Java 11+
 + Maven
 
 ## Usage:
