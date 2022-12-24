@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Util {
-  private final static Logger logger = LogManager.getLogger(Util.class);
+public final class Util {
+  private static final Logger logger = LogManager.getLogger(Util.class);
 
   public static double calculateDistance(double lat1, double lon1, double lat2, double lon2, DistanceUnit distanceUnit) throws UnsupportedUnitException {
     if (distanceUnit != null) {
@@ -70,7 +70,7 @@ public class Util {
   public static String getConfigProperty(String key) {
     if (key != null) {
       final String resource = "config.properties";
-      try (InputStream is = Util.class.getClassLoader().getResourceAsStream(resource)) {
+      try (final InputStream is = Util.class.getClassLoader().getResourceAsStream(resource)) {
         Properties prop = new Properties();
         prop.load(is);
         return prop.getProperty(key);

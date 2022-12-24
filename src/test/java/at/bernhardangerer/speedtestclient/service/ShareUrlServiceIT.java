@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-public class ShareUrlServiceIT {
+public final class ShareUrlServiceIT {
 
   @Test
   public void createShareURL() throws IOException, MissingResultException, ServerRequestException {

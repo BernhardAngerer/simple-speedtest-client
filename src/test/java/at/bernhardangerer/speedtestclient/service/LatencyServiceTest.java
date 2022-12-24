@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LatencyServiceTest {
+public final class LatencyServiceTest {
 
   @Test
   public void calculateAverage() throws MissingResultException {

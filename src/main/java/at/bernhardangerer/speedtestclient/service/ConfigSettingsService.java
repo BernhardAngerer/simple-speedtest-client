@@ -12,14 +12,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ConfigSettingsService {
+public final class ConfigSettingsService {
   private static final String CONFIG_URL = "https://www.speedtest.net/speedtest-config.php";
 
   static ConfigSetting getSettingFromXML(byte[] xml) throws ParsingException {
     if (xml != null) {
-      try (InputStream is = new ByteArrayInputStream(xml)) {
-        JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);
-        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+      try (final InputStream is = new ByteArrayInputStream(xml)) {
+        final JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);
+        final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         return (ConfigSetting) jaxbUnmarshaller.unmarshal(is);
       } catch (IOException | JAXBException e) {
         throw new ParsingException(e);

@@ -1,6 +1,6 @@
 package at.bernhardangerer.speedtestclient.exception;
 
-public class ServerRequestException extends Exception {
+public final class ServerRequestException extends Exception {
   public ServerRequestException(String message) {
     super(message);
   }

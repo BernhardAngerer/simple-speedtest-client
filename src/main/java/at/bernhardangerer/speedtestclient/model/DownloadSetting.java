@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "download")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DownloadSetting {
+public final class DownloadSetting {
 
   @XmlAttribute(name = "testlength")
   private int testLength;

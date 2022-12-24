@@ -6,7 +6,7 @@ import at.bernhardangerer.speedtestclient.util.Callback;
 
 import java.util.concurrent.Callable;
 
-public class DownloadTask implements Callable<TransferTestResult> {
+public final class DownloadTask implements Callable<TransferTestResult> {
   private final String url;
   private final long timeoutTime;
   private final Callback callback;
@@ -19,7 +19,7 @@ public class DownloadTask implements Callable<TransferTestResult> {
 
   @Override
   public TransferTestResult call() throws ServerRequestException {
-    TransferTestResult result = HttpGetClient.partialGetDownloadData(url, timeoutTime);
+    final TransferTestResult result = HttpGetClient.partialGetDownloadData(url, timeoutTime);
     callback.execute();
     return result;
   }

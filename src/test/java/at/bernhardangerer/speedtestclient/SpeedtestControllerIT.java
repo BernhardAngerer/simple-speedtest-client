@@ -6,11 +6,11 @@ import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class SpeedtestControllerIT {
+public final class SpeedtestControllerIT {
 
   @Test
   public void runSpeedTest() throws SpeedtestException {
-    SpeedtestResult result = SpeedtestController.runSpeedTest(DistanceUnit.KILOMETER, true, true, false, false);
+    final SpeedtestResult result = SpeedtestController.runSpeedTest(DistanceUnit.KILOMETER, true, true, false, false);
     Assertions.assertNotNull(result);
     Assertions.assertNotNull(result.getLatency());
     Assertions.assertNotNull(result.getDownload());

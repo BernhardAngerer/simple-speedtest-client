@@ -8,8 +8,7 @@ public class HttpClient {
 
   static HttpURLConnection createConnection(URL url, String requestMethod) throws IOException {
     if (url != null && requestMethod != null) {
-      HttpURLConnection conn;
-      conn = (HttpURLConnection) url.openConnection();
+      final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setUseCaches(false);
       conn.setRequestMethod(requestMethod);
       conn.setRequestProperty("User-Agent", "speedtest-client");

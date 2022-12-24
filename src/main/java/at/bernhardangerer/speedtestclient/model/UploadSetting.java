@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "upload")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UploadSetting {
+public final class UploadSetting {
 
   @XmlAttribute(name = "ratio")
   private int ratio;

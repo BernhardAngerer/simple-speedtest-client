@@ -1,6 +1,6 @@
 package at.bernhardangerer.speedtestclient.model;
 
-public class LatencyTestResult {
+public final class LatencyTestResult {
   private Double latency;
   private Double distance;
 

@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Server {
+public final class Server {
 
   @XmlAttribute(name = "url")
   private String url;

@@ -9,7 +9,7 @@ import at.bernhardangerer.speedtestclient.util.Util;
 import java.util.List;
 import java.util.Map;
 
-public class SpeedtestController {
+public final class SpeedtestController {
 
   public static SpeedtestResult runSpeedTest() throws SpeedtestException {
     return runSpeedTest(DistanceUnit.fromAbbreviation(Util.getConfigProperty("DistanceUnit.default")),

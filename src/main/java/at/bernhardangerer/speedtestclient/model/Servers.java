@@ -9,7 +9,7 @@ import java.util.List;
 
 @XmlRootElement(name = "servers")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Servers {
+public final class Servers {
 
   @XmlElement(name = "server")
   private List<Server> serverList = null;

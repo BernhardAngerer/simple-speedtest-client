@@ -1,6 +1,6 @@
 package at.bernhardangerer.speedtestclient.model;
 
-public class TransferTestResult {
+public final class TransferTestResult {
   private double rateInMbps;
   private int bytes;
   private long durationInMs;

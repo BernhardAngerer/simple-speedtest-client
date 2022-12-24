@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import static at.bernhardangerer.speedtestclient.SpeedtestController.runSpeedTest;
 
-public class SpeedtestCLI {
-  private final static Logger logger = LogManager.getLogger(SpeedtestCLI.class);
+public final class SpeedtestCLI {
+  private static final Logger logger = LogManager.getLogger(SpeedtestCLI.class);
 
   public static void main(String[] args) {
     final CommandLine cmd = getCommandLine(createOptions(), args);

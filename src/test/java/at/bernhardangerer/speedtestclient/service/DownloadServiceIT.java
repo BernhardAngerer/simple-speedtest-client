@@ -6,11 +6,11 @@ import at.bernhardangerer.speedtestclient.model.TransferTestResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class DownloadServiceIT {
+public final class DownloadServiceIT {
 
   @Test
   public void testDownload() throws InterruptedException, MissingResultException {
-  	TransferTestResult result = DownloadService.testDownload("http://speedtest.nessus.at:8080/speedtest",
+    final TransferTestResult result = DownloadService.testDownload("http://speedtest.nessus.at:8080/speedtest",
         new DownloadSetting(5, 2), () -> {});
     Assertions.assertNotNull(result);
     Assertions.assertTrue(result.getRateInMbps() > 0.0);
@@ -18,4 +18,4 @@ public class DownloadServiceIT {
     Assertions.assertTrue(result.getDurationInMs() > 0);
   }
 
-}	
+}

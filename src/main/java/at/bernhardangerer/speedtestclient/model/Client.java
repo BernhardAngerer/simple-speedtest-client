@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "client")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Client {
+public final class Client {
 
   @XmlAttribute(name = "ip")
   private String ip;

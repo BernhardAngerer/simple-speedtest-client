@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ServerSettingsServiceTest {
+public final class ServerSettingsServiceTest {
 
   @Test
   public void getServersFromXML() throws ParsingException, MissingResultException {
-    List<Server> result = ServerSettingsService.getServersFromXML(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    final List<Server> result = ServerSettingsService.getServersFromXML(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         + "<settings>\n"
         + "<servers>\n"
         + "<server url=\"http://gyor-speedtest.zt.hu:8080/speedtest/upload.php\" lat=\"47.6875\" lon=\"17.6504\" name=\"a city\" country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"9720\"  host=\"gyor-speedtest.zt.hu:8080\" />\n"
@@ -38,7 +38,7 @@ public class ServerSettingsServiceTest {
   @Test
   public void findClosestServers() throws MissingResultException {
     Map<Double, Server> result;
-    List<Server> serverList = new ArrayList<>();
+    final List<Server> serverList = new ArrayList<>();
     serverList.add(new Server("http://gyor-speedtest.zt.hu:8080/speedtest/upload.php", 47.6800, 17.6500, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 1, "gyor-speedtest.zt.hu:8080"));
     serverList.add(new Server("http://gyor-speedtest.zt.hu:8080/speedtest/upload.php", 47.6900, 17.6600, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 2, "gyor-speedtest.zt.hu:8080"));
     serverList.add(new Server("http://gyor-speedtest.zt.hu:8080/speedtest/upload.php", 47.7000, 17.6700, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 3, "gyor-speedtest.zt.hu:8080"));

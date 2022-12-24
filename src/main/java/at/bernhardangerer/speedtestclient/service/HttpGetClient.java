@@ -10,16 +10,16 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpGetClient extends HttpClient {
+public final class HttpGetClient extends HttpClient {
   private final static String GET = "GET";
 
   public static TransferTestResult partialGetDownloadData(String urlString, long timeoutTime) throws ServerRequestException {
     if (urlString != null) {
       int bytesReceived = 0;
       try {
-        HttpURLConnection conn = createConnection(new URL(urlString), GET);
+        final HttpURLConnection conn = createConnection(new URL(urlString), GET);
         final long startTime = System.currentTimeMillis();
-        try (InputStream is = conn.getInputStream()) {
+        try (final InputStream is = conn.getInputStream()) {
           byte[] buffer = new byte[Integer.parseInt(Util.getConfigProperty("Download.maxBufferSize"))];
           int bytesRead = 1;
           while (bytesRead > 0) {
@@ -44,8 +44,8 @@ public class HttpGetClient extends HttpClient {
   public static byte[] get(String urlString) throws ServerRequestException {
     if (urlString != null) {
       try {
-        HttpURLConnection conn = createConnection(new URL(urlString), GET);
-        try (InputStream is = conn.getInputStream()) {
+        final HttpURLConnection conn = createConnection(new URL(urlString), GET);
+        try (final InputStream is = conn.getInputStream()) {
           return IOUtils.toByteArray(is);
         }
       } catch (IOException e) {

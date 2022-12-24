@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "settings")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ServerSetting {
+public final class ServerSetting {
 
   @XmlElement(name = "servers")
   private Servers servers = null;

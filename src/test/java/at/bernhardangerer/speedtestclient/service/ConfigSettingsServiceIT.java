@@ -7,11 +7,11 @@ import at.bernhardangerer.speedtestclient.model.ConfigSetting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ConfigSettingsServiceIT {
+public final class ConfigSettingsServiceIT {
 
   @Test
   public void requestSettings() throws MissingResultException, ServerRequestException, ParsingException {
-    ConfigSetting result = ConfigSettingsService.requestSetting();
+    final ConfigSetting result = ConfigSettingsService.requestSetting();
     Assertions.assertNotNull(result);
     Assertions.assertNotNull(result.getClient());
     Assertions.assertNotNull(result.getDownload());

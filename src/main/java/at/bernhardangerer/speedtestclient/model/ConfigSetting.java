@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "settings")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ConfigSetting {
+public final class ConfigSetting {
 
   @XmlElement(name = "client")
   private Client client = null;

@@ -1,6 +1,6 @@
 package at.bernhardangerer.speedtestclient.model;
 
-public class SpeedtestResult {
+public final class SpeedtestResult {
   private long timestamp;
   private Client client;
   private Server server;

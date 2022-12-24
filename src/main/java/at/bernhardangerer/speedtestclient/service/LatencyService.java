@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class LatencyService {
-  private final static Logger logger = LogManager.getLogger(LatencyService.class);
+public final class LatencyService {
+  private static final Logger logger = LogManager.getLogger(LatencyService.class);
   private static final String TEST_FILE = "/latency.txt?x=";
   private static final String EXPECTED_BODY = "test=test\n";
 
@@ -22,10 +22,10 @@ public class LatencyService {
     if (serverUrl != null && limit > 0) {
       final List<Long> latencies = new ArrayList<>();
       for (int i = 0; i < limit; i++) {
-        String testUrl = serverUrl + TEST_FILE + System.currentTimeMillis();
-        long startTimestamp = System.currentTimeMillis();
-        byte[] bytes = HttpGetClient.get(testUrl);
-        long totalTime = System.currentTimeMillis() - startTimestamp;
+        final String testUrl = serverUrl + TEST_FILE + System.currentTimeMillis();
+        final long startTimestamp = System.currentTimeMillis();
+        final byte[] bytes = HttpGetClient.get(testUrl);
+        final long totalTime = System.currentTimeMillis() - startTimestamp;
         if (bytes != null && new String(bytes, StandardCharsets.UTF_8).equals(EXPECTED_BODY)) {
           latencies.add(totalTime / 2);
         }
@@ -40,7 +40,7 @@ public class LatencyService {
     if (serverMap != null && !serverMap.isEmpty()) {
       final int testsPerServer = Integer.parseInt(Util.getConfigProperty("Latency.testsPerServer.maxNumber"));
       final Map<Server, LatencyTestResult> results = new HashMap<>();
-      for (Entry<Double, Server> entry : serverMap.entrySet()) {
+      for (final Entry<Double, Server> entry : serverMap.entrySet()) {
         if (entry != null) {
           try {
             results.put(entry.getValue(), new LatencyTestResult(calculateAverage(

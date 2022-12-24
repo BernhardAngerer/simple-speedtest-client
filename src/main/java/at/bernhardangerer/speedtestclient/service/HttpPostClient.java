@@ -10,20 +10,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class HttpPostClient extends HttpClient {
+public final class HttpPostClient extends HttpClient {
   private final static String POST = "POST";
 
   public static TransferTestResult partialPostUploadData(String urlString, long timeoutTime, String dataString) throws ServerRequestException {
     if (urlString != null  && dataString != null) {
       final int maxBufferSize = Integer.parseInt(Util.getConfigProperty("Upload.maxBufferSize"));
       int bytesSent = 0;
-      try (InputStream is = new ByteArrayInputStream(dataString.getBytes())) {
-        HttpURLConnection conn = createConnection(new URL(urlString), POST);
+      try (final InputStream is = new ByteArrayInputStream(dataString.getBytes())) {
+        final HttpURLConnection conn = createConnection(new URL(urlString), POST);
         conn.setChunkedStreamingMode(maxBufferSize);
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Length", Integer.toString(dataString.length()));
         final long startTime = System.currentTimeMillis();
-        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+        final DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
         int bytesAvailable = is.available();
         int bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -55,16 +55,16 @@ public class HttpPostClient extends HttpClient {
   public static String postBodyWithSharedData(String urlString, String encodedBody) throws ServerRequestException {
     if (urlString != null && encodedBody != null) {
       try {
-        HttpURLConnection conn = createConnection(new URL(urlString), POST);
+        final HttpURLConnection conn = createConnection(new URL(urlString), POST);
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Length", Integer.toString(encodedBody.length()));
         conn.setRequestProperty("Referer", "http://c.speedtest.net/flash/speedtest.swf");
         conn.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        try (OutputStream os = conn.getOutputStream();
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
+        try (final OutputStream os = conn.getOutputStream();
+             final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
           writer.write(encodedBody);
           writer.flush();
-          try (InputStream is = conn.getInputStream()) {
+          try (final InputStream is = conn.getInputStream()) {
             return IOUtils.toString(is, StandardCharsets.UTF_8);
           }
         }
