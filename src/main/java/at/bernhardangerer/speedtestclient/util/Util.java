@@ -16,6 +16,9 @@ import java.util.Properties;
 public final class Util {
   private static final Logger logger = LogManager.getLogger(Util.class);
 
+  private Util() {
+  }
+
   public static double calculateDistance(double lat1, double lon1, double lat2, double lon2, DistanceUnit distanceUnit) throws UnsupportedUnitException {
     if (distanceUnit != null) {
       if ((lat1 == lat2) && (lon1 == lon2)) {

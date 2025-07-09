@@ -10,7 +10,7 @@ public final class SpeedtestControllerIT {
 
   @Test
   public void runSpeedTest() throws SpeedtestException {
-    final SpeedtestResult result = SpeedtestController.runSpeedTest(DistanceUnit.KILOMETER, true, true, false, false);
+    final SpeedtestResult result = SpeedtestController.runSpeedTest(DistanceUnit.KILOMETER, true, true, false, false, null);
     Assertions.assertNotNull(result);
     Assertions.assertNotNull(result.getLatency());
     Assertions.assertNotNull(result.getDownload());

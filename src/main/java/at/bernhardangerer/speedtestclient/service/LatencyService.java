@@ -4,7 +4,6 @@ import at.bernhardangerer.speedtestclient.exception.MissingResultException;
 import at.bernhardangerer.speedtestclient.exception.ServerRequestException;
 import at.bernhardangerer.speedtestclient.model.LatencyTestResult;
 import at.bernhardangerer.speedtestclient.model.Server;
-import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +37,7 @@ public final class LatencyService {
 
   public static Map<Server, LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
     if (serverMap != null && !serverMap.isEmpty()) {
-      final int testsPerServer = Integer.parseInt(Util.getConfigProperty("Latency.testsPerServer.maxNumber"));
+      final int testsPerServer = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Latency.testsPerServer.maxNumber")));
       final Map<Server, LatencyTestResult> results = new HashMap<>();
       for (final Entry<Double, Server> entry : serverMap.entrySet()) {
         if (entry != null) {
@@ -60,8 +59,8 @@ public final class LatencyService {
     }
   }
 
-  public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap, DistanceUnit distanceUnit) throws MissingResultException {
-    if (serverMap != null && distanceUnit != null && !serverMap.isEmpty()) {
+  public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap) throws MissingResultException {
+    if (serverMap != null && !serverMap.isEmpty()) {
       return findServerLatencies(serverMap).entrySet().stream()
           .min(Comparator.comparing(o -> o.getValue().getLatency()))
           .orElseThrow(MissingResultException::new);

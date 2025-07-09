@@ -1,12 +1,20 @@
 package at.bernhardangerer.speedtestclient;
 
+import at.bernhardangerer.speedtestclient.model.ConfigSetting;
+import at.bernhardangerer.speedtestclient.model.Server;
+import at.bernhardangerer.speedtestclient.service.ConfigSettingsService;
+import at.bernhardangerer.speedtestclient.service.ServerSettingsService;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 import static at.bernhardangerer.speedtestclient.SpeedtestController.runSpeedTest;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.*;
 
 public final class SpeedtestCLI {
   private static final Logger logger = LogManager.getLogger(SpeedtestCLI.class);
@@ -15,37 +23,40 @@ public final class SpeedtestCLI {
     final CommandLine cmd = getCommandLine(createOptions(), args);
     if (cmd != null) {
       try {
+        if (cmd.hasOption(LIST_SERVER_HOSTS)) {
+          final ConfigSetting configSetting = ConfigSettingsService.requestSetting();
+          final List<Server> serverHostList = ServerSettingsService.requestServerList(configSetting.getDownload().getThreadsPerURL());
+          System.out.println("List of valid server hosts:");
+          serverHostList.forEach(server -> System.out.println(server.getHost()));
+          return;
+        }
+
+        Server dedicatedServer = null;
+        if (cmd.hasOption(DEDICATED_SERVER_HOST) && cmd.getParsedOptionValue(DEDICATED_SERVER_HOST) != null
+                && !cmd.getParsedOptionValue(DEDICATED_SERVER_HOST).toString().trim().isEmpty()) {
+          final ConfigSetting configSetting = ConfigSettingsService.requestSetting();
+          final List<Server> serverHostList = ServerSettingsService.requestServerList(configSetting.getDownload().getThreadsPerURL());
+          dedicatedServer = serverHostList.stream().filter(server -> {
+              try {
+                  return cmd.getParsedOptionValue(DEDICATED_SERVER_HOST).toString().trim().equals(server.getHost());
+              } catch (ParseException e) {
+                  throw new RuntimeException(e);
+              }
+          }).findFirst().orElse(null);
+
+          if (dedicatedServer == null) {
+            System.out.println("The provided host is not in the list of valid server hosts!");
+            return;
+          }
+        }
+
         runSpeedTest(DistanceUnit.fromAbbreviation(Util.getConfigProperty("DistanceUnit.default")),
-            !cmd.hasOption("noDownload"), !cmd.hasOption("noUpload"), cmd.hasOption("share"), true);
+            !cmd.hasOption(NO_DOWNLOAD), !cmd.hasOption(NO_UPLOAD), cmd.hasOption(SHARE), true, dedicatedServer);
       } catch (Exception e) {
-        e.printStackTrace();
+        System.out.println("Sorry, an unexpected exception occurred!");
         logger.error(e.getMessage(), e);
       }
     }
-  }
-
-  private static CommandLine getCommandLine(final Options options, final String[] args) {
-    final CommandLineParser parser = new DefaultParser();
-    CommandLine line = null;
-    try {
-      line = parser.parse(options, args);
-    } catch (ParseException e) {
-      help(options);
-    }
-    return line;
-  }
-
-  private static Options createOptions() {
-    final Options options = new Options();
-    options.addOption(new Option("noDownload", "Do not perform download test"));
-    options.addOption(new Option("noUpload", "Do not perform upload test"));
-    options.addOption(new Option("share", "Generate and provide a URL to the speedtest.net share results image"));
-    return options;
-  }
-
-  private static void help(final Options options) {
-    final HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp("Optional parameters:", options);
   }
 
 }

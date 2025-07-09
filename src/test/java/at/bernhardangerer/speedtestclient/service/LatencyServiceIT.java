@@ -4,7 +4,6 @@ import at.bernhardangerer.speedtestclient.exception.MissingResultException;
 import at.bernhardangerer.speedtestclient.exception.ServerRequestException;
 import at.bernhardangerer.speedtestclient.model.LatencyTestResult;
 import at.bernhardangerer.speedtestclient.model.Server;
-import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +46,7 @@ public final class LatencyServiceIT {
     servers.put(4D, new Server("http://speedtest.microsystem.hu:8080/speedtest/upload.php", 47.7100, 17.6800, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 4, "gyor-speedtest.zt.hu:8080"));
     servers.put(5D, new Server("http://speedtest.szerverplex.hu:8080/speedtest/upload.php", 47.7100, 17.6900, "Gyor", "Hungary", "HU", "ZNET Telekom Zrt.", 5, "gyor-speedtest.zt.hu:8080"));
 
-    final Map.Entry<Server, LatencyTestResult> result = LatencyService.getFastestServer(servers, DistanceUnit.KILOMETER);
+    final Map.Entry<Server, LatencyTestResult> result = LatencyService.getFastestServer(servers);
     Assertions.assertNotNull(result);
     Assertions.assertNotNull(result.getKey());
     Assertions.assertNotNull(result.getValue().getLatency());

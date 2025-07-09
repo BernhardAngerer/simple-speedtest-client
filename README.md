@@ -23,9 +23,14 @@ java -jar simple-speedtest-client-2.0.4.jar
 ```
 ```bash
 usage: Optional parameters:
--noDownload   Do not perform download-test
--noUpload     Do not perform upload-test
--share        Generate and provide a URL to the speedtest.net share results image
+ -h,--dedicatedServerHost <HOST>   Dedicated server host to run the tests
+                                   against
+ -l,--listServerHosts              Provide a list of server hosts to run
+                                   the tests against
+ -nd,--noDownload                  Do not perform download test
+ -nu,--noUpload                    Do not perform upload test
+ -s,--share                        Generate and provide an URL to the
+                                   speedtest.net share results image
 ```
 
 Example:
