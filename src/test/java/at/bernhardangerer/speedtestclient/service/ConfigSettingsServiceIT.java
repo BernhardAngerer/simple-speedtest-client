@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 public final class ConfigSettingsServiceIT {
 
-  @Test
-  public void requestSettings() throws MissingResultException, ServerRequestException, ParsingException {
-    final ConfigSetting result = ConfigSettingsService.requestSetting();
-    Assertions.assertNotNull(result);
-    Assertions.assertNotNull(result.getClient());
-    Assertions.assertNotNull(result.getDownload());
-  }
+    @Test
+    public void requestSettings() throws MissingResultException, ServerRequestException, ParsingException {
+        final ConfigSetting result = ConfigSettingsService.requestSetting();
+        Assertions.assertNotNull(result);
+        Assertions.assertNotNull(result.getClient());
+        Assertions.assertNotNull(result.getDownload());
+    }
 
 }

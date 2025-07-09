@@ -9,15 +9,15 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class ServerSetting {
 
-  @XmlElement(name = "servers")
-  private Servers servers = null;
+    @XmlElement(name = "servers")
+    private Servers servers;
 
-  public Servers getServers() {
-    return servers;
-  }
+    public Servers getServers() {
+        return servers;
+    }
 
-  public void setServers(Servers servers) {
-    this.servers = servers;
-  }
+    public void setServers(Servers servers) {
+        this.servers = servers;
+    }
 
 }

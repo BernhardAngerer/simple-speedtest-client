@@ -4,10 +4,17 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.junit.jupiter.api.Test;
 
-import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.DEDICATED_SERVER_HOST;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.LIST_SERVER_HOSTS;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.NO_DOWNLOAD;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.NO_UPLOAD;
+import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.SHARE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CommandLineUtilTest {
+public final class CommandLineUtilTest {
 
     @Test
     public void testValidCommandLine() {

@@ -9,82 +9,90 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 public final class LatencyService {
-  private static final Logger logger = LogManager.getLogger(LatencyService.class);
-  private static final String TEST_FILE = "/latency.txt?x=";
-  private static final String EXPECTED_BODY = "test=test\n";
+    private static final Logger logger = LogManager.getLogger(LatencyService.class);
+    private static final String TEST_FILE = "/latency.txt?x=";
+    private static final String EXPECTED_BODY = "test=test\n";
 
-  public static List<Long> testLatency(String serverUrl, int limit) throws ServerRequestException {
-    if (serverUrl != null && limit > 0) {
-      final List<Long> latencies = new ArrayList<>();
-      for (int i = 0; i < limit; i++) {
-        final String testUrl = serverUrl + TEST_FILE + System.currentTimeMillis();
-        final long startTimestamp = System.currentTimeMillis();
-        final byte[] bytes = HttpGetClient.get(testUrl);
-        final long totalTime = System.currentTimeMillis() - startTimestamp;
-        if (bytes != null && new String(bytes, StandardCharsets.UTF_8).equals(EXPECTED_BODY)) {
-          latencies.add(totalTime / 2);
+    private LatencyService() {
+    }
+
+    public static List<Long> testLatency(String serverUrl, int limit) throws ServerRequestException {
+        if (serverUrl != null && limit > 0) {
+            final List<Long> latencies = new ArrayList<>();
+            for (int iter = 0; iter < limit; iter++) {
+                final String testUrl = serverUrl + TEST_FILE + System.currentTimeMillis();
+                final long startTimestamp = System.currentTimeMillis();
+                final byte[] bytes = HttpGetClient.get(testUrl);
+                final long totalTime = System.currentTimeMillis() - startTimestamp;
+                if (bytes != null && new String(bytes, StandardCharsets.UTF_8).equals(EXPECTED_BODY)) {
+                    latencies.add(totalTime / 2);
+                }
+            }
+            return latencies;
+        } else {
+            throw new IllegalArgumentException();
         }
-      }
-      return latencies;
-    } else {
-      throw new IllegalArgumentException();
     }
-  }
 
-  public static Map<Server, LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
-    if (serverMap != null && !serverMap.isEmpty()) {
-      final int testsPerServer = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Latency.testsPerServer.maxNumber")));
-      final Map<Server, LatencyTestResult> results = new HashMap<>();
-      for (final Entry<Double, Server> entry : serverMap.entrySet()) {
-        if (entry != null) {
-          try {
-            results.put(entry.getValue(), new LatencyTestResult(calculateAverage(
-                testLatency(entry.getValue().getUrl(), testsPerServer)), entry.getKey()));
-          } catch (ServerRequestException | MissingResultException e) {
-            logger.error(e.getMessage(), e);
-          }
+    public static Map<Server, LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
+        if (serverMap != null && !serverMap.isEmpty()) {
+            final int testsPerServer = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Latency.testsPerServer.maxNumber")));
+            final Map<Server, LatencyTestResult> results = new HashMap<>();
+            for (final Entry<Double, Server> entry : serverMap.entrySet()) {
+                if (entry != null) {
+                    try {
+                        results.put(entry.getValue(), new LatencyTestResult(calculateAverage(
+                                testLatency(entry.getValue().getUrl(), testsPerServer)), entry.getKey()));
+                    } catch (ServerRequestException | MissingResultException e) {
+                        logger.error(e.getMessage(), e);
+                    }
+                }
+            }
+            if (!results.isEmpty()) {
+                return results;
+            } else {
+                throw new MissingResultException("Empty map for latency tests");
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
-      }
-      if (!results.isEmpty()) {
-        return results;
-      } else {
-        throw new MissingResultException("Empty map for latency tests");
-      }
-    } else {
-      throw new IllegalArgumentException();
     }
-  }
 
-  public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap) throws MissingResultException {
-    if (serverMap != null && !serverMap.isEmpty()) {
-      return findServerLatencies(serverMap).entrySet().stream()
-          .min(Comparator.comparing(o -> o.getValue().getLatency()))
-          .orElseThrow(MissingResultException::new);
-    } else {
-      throw new IllegalArgumentException();
+    public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap) throws MissingResultException {
+        if (serverMap != null && !serverMap.isEmpty()) {
+            return findServerLatencies(serverMap).entrySet().stream()
+                    .min(Comparator.comparing(entry -> entry.getValue().getLatency()))
+                    .orElseThrow(MissingResultException::new);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
-  }
 
-  public static double calculateAverage(List<Long> list) throws MissingResultException {
-    if (list != null && !list.isEmpty()) {
-      if (list.stream()
-          .filter(Objects::nonNull)
-          .mapToLong(Long::longValue)
-          .average().isPresent()) {
-        return list.stream()
-            .filter(Objects::nonNull)
-            .mapToLong(Long::longValue)
-            .average()
-            .getAsDouble();
-      } else {
-        throw new MissingResultException("Unable to calculate average");
-      }
-    } else {
-      throw new IllegalArgumentException();
+    public static double calculateAverage(List<Long> list) throws MissingResultException {
+        if (list != null && !list.isEmpty()) {
+            if (list.stream()
+                    .filter(Objects::nonNull)
+                    .mapToLong(Long::longValue)
+                    .average().isPresent()) {
+                return list.stream()
+                        .filter(Objects::nonNull)
+                        .mapToLong(Long::longValue)
+                        .average()
+                        .getAsDouble();
+            } else {
+                throw new MissingResultException("Unable to calculate average");
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
-  }
 }

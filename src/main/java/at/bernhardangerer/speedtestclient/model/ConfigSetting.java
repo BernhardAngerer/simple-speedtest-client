@@ -9,37 +9,37 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class ConfigSetting {
 
-  @XmlElement(name = "client")
-  private Client client = null;
+    @XmlElement(name = "client")
+    private Client client;
 
-  @XmlElement(name = "download")
-  private DownloadSetting download = null;
+    @XmlElement(name = "download")
+    private DownloadSetting download;
 
-  @XmlElement(name = "upload")
-  private UploadSetting upload = null;
+    @XmlElement(name = "upload")
+    private UploadSetting upload;
 
-  public Client getClient() {
-    return client;
-  }
+    public Client getClient() {
+        return client;
+    }
 
-  public void setClient(Client client) {
-    this.client = client;
-  }
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
-  public DownloadSetting getDownload() {
-    return download;
-  }
+    public DownloadSetting getDownload() {
+        return download;
+    }
 
-  public void setDownload(DownloadSetting download) {
-    this.download = download;
-  }
+    public void setDownload(DownloadSetting download) {
+        this.download = download;
+    }
 
-  public UploadSetting getUpload() {
-    return upload;
-  }
+    public UploadSetting getUpload() {
+        return upload;
+    }
 
-  public void setUpload(UploadSetting upload) {
-    this.upload = upload;
-  }
+    public void setUpload(UploadSetting upload) {
+        this.upload = upload;
+    }
 
 }

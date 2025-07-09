@@ -11,14 +11,14 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Servers {
 
-  @XmlElement(name = "server")
-  private List<Server> serverList = null;
+    @XmlElement(name = "server")
+    private List<Server> serverList;
 
-  public List<Server> getServerList() {
-    return serverList;
-  }
+    public List<Server> getServerList() {
+        return serverList;
+    }
 
-  public void setServerList(List<Server> serverList) {
-    this.serverList = serverList;
-  }
+    public void setServerList(List<Server> serverList) {
+        this.serverList = serverList;
+    }
 }

@@ -9,21 +9,21 @@ import java.util.Arrays;
 
 public final class LatencyServiceTest {
 
-  @Test
-  public void calculateAverage() throws MissingResultException {
-    Double result;
+    @Test
+    public void calculateAverage() throws MissingResultException {
+        Double result;
 
-    result = LatencyService.calculateAverage(Arrays.asList(2L, 4L, 9L));
-    Assertions.assertNotNull(result);
-    Assertions.assertEquals(5d, result);
+        result = LatencyService.calculateAverage(Arrays.asList(2L, 4L, 9L));
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(5d, result);
 
-    result = LatencyService.calculateAverage(Arrays.asList(2L, 4L, null));
-    Assertions.assertNotNull(result);
-    Assertions.assertEquals(3d, result);
+        result = LatencyService.calculateAverage(Arrays.asList(2L, 4L, null));
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(3d, result);
 
-    Assertions.assertThrows(IllegalArgumentException.class, () -> LatencyService.calculateAverage(new ArrayList<>()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> LatencyService.calculateAverage(new ArrayList<>()));
 
-    Assertions.assertThrows(IllegalArgumentException.class, () -> LatencyService.calculateAverage(null));
-  }
+        Assertions.assertThrows(IllegalArgumentException.class, () -> LatencyService.calculateAverage(null));
+    }
 
 }

@@ -9,42 +9,42 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class DownloadSetting {
 
-  @XmlAttribute(name = "testlength")
-  private int testLength;
+    @XmlAttribute(name = "testlength")
+    private int testLength;
 
-  @XmlAttribute(name = "threadsperurl")
-  private int threadsPerURL;
+    @XmlAttribute(name = "threadsperurl")
+    private int threadsPerUrl;
 
-  public DownloadSetting() {
-  }
+    public DownloadSetting() {
+    }
 
-  public DownloadSetting(int testLength, int threadsPerURL) {
-    this.testLength = testLength;
-    this.threadsPerURL = threadsPerURL;
-  }
+    public DownloadSetting(int testLength, int threadsPerUrl) {
+        this.testLength = testLength;
+        this.threadsPerUrl = threadsPerUrl;
+    }
 
-  public int getTestLength() {
-    return testLength;
-  }
+    public int getTestLength() {
+        return testLength;
+    }
 
-  public void setTestLength(int testLength) {
-    this.testLength = testLength;
-  }
+    public void setTestLength(int testLength) {
+        this.testLength = testLength;
+    }
 
-  public int getThreadsPerURL() {
-    return threadsPerURL;
-  }
+    public int getThreadsPerUrl() {
+        return threadsPerUrl;
+    }
 
-  public void setThreadsPerURL(int threadsPerURL) {
-    this.threadsPerURL = threadsPerURL;
-  }
+    public void setThreadsPerUrl(int threadsPerUrl) {
+        this.threadsPerUrl = threadsPerUrl;
+    }
 
-  @Override
-  public String toString() {
-    return "DownloadSetting{" +
-        "testLength=" + testLength +
-        ", threadsPerURL=" + threadsPerURL +
-        '}';
-  }
+    @Override
+    public String toString() {
+        return "DownloadSetting {"
+                + "testLength=" + testLength
+                + ", threadsPerUrl=" + threadsPerUrl
+                + '}';
+    }
 
 }

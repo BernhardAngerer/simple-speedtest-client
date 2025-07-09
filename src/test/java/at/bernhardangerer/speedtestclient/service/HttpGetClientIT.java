@@ -7,19 +7,20 @@ import org.junit.jupiter.api.Test;
 
 public final class HttpGetClientIT {
 
-  @Test
-  public void get() throws ServerRequestException {
-    final byte[] result = HttpGetClient.get("https://www.speedtest.net/speedtest-servers-static.php");
-    Assertions.assertNotNull(result);
-    Assertions.assertTrue(result.length > 0);
-  }
+    @Test
+    public void get() throws ServerRequestException {
+        final byte[] result = HttpGetClient.get("https://www.speedtest.net/speedtest-servers-static.php");
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result.length > 0);
+    }
 
-  @Test
-  public void partialGetDownloadData() throws ServerRequestException {
-    final TransferTestResult result = HttpGetClient.partialGetDownloadData("http://sp1.telekom.sk:8080/speedtest/upload.php/random350x350.jpg", 0);
-    Assertions.assertNotNull(result);
-    Assertions.assertTrue(result.getBytes() > 0);
-    Assertions.assertTrue(result.getDurationInMs() > 0);
-  }
+    @Test
+    public void partialGetDownloadData() throws ServerRequestException {
+        final TransferTestResult result =
+                HttpGetClient.partialGetDownloadData("http://sp1.telekom.sk:8080/speedtest/upload.php/random350x350.jpg", 0);
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result.getBytes() > 0);
+        Assertions.assertTrue(result.getDurationInMs() > 0);
+    }
 
 }

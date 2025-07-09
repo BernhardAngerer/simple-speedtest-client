@@ -71,7 +71,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>at.bernhardangerer.speedtestclient.SpeedtestCLI</mainClass>
+                                    <mainClass>at.bernhardangerer.speedtestclient.SpeedtestCli</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
@@ -133,6 +133,7 @@
                             <excludes>
                                 <exclude>at/bernhardangerer/speedtestclient/exception/*</exclude>
                                 <exclude>at/bernhardangerer/speedtestclient/model/*</exclude>
+                                <exclude>at/bernhardangerer/speedtestclient/type/*</exclude>
                             </excludes>
                             <rules>
                                 <rule>

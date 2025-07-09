@@ -13,29 +13,32 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public final class ConfigSettingsService {
-  private static final String CONFIG_URL = "https://www.speedtest.net/speedtest-config.php";
+    private static final String CONFIG_URL = "https://www.speedtest.net/speedtest-config.php";
 
-  static ConfigSetting getSettingFromXML(byte[] xml) throws ParsingException {
-    if (xml != null) {
-      try (final InputStream is = new ByteArrayInputStream(xml)) {
-        final JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);
-        final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        return (ConfigSetting) jaxbUnmarshaller.unmarshal(is);
-      } catch (IOException | JAXBException e) {
-        throw new ParsingException(e);
-      }
-    } else {
-      throw new IllegalArgumentException();
+    private ConfigSettingsService() {
     }
-  }
 
-  public static ConfigSetting requestSetting() throws MissingResultException, ServerRequestException, ParsingException {
-    final byte[] bytes = HttpGetClient.get(CONFIG_URL);
-    if (bytes != null) {
-      return getSettingFromXML(bytes);
-    } else {
-      throw new MissingResultException("Missing result for config settings request");
+    static ConfigSetting getSettingFromXML(byte[] xml) throws ParsingException {
+        if (xml != null) {
+            try (InputStream is = new ByteArrayInputStream(xml)) {
+                final JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);
+                final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                return (ConfigSetting) jaxbUnmarshaller.unmarshal(is);
+            } catch (IOException | JAXBException e) {
+                throw new ParsingException(e);
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
-  }
+
+    public static ConfigSetting requestSetting() throws MissingResultException, ServerRequestException, ParsingException {
+        final byte[] bytes = HttpGetClient.get(CONFIG_URL);
+        if (bytes != null) {
+            return getSettingFromXML(bytes);
+        } else {
+            throw new MissingResultException("Missing result for config settings request");
+        }
+    }
 
 }
