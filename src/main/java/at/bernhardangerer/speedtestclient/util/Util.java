@@ -57,11 +57,13 @@ public final class Util {
             for (String param : paramString.split("&")) {
                 final String[] pair = param.split("=");
                 final String key = URLDecoder.decode(pair[0], StandardCharsets.UTF_8);
-                String value = "";
-                if (pair.length > 1) {
-                    value = URLDecoder.decode(pair[1], StandardCharsets.UTF_8);
+                if (!params.containsKey(key)) {
+                    String value = "";
+                    if (pair.length > 1) {
+                        value = URLDecoder.decode(pair[1], StandardCharsets.UTF_8);
+                    }
+                    params.put(key, value);
                 }
-                params.put(key, value);
             }
             return params;
         } else {
