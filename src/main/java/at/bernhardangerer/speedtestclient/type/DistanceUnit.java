@@ -1,7 +1,10 @@
 package at.bernhardangerer.speedtestclient.type;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum DistanceUnit {
     MILE("mi"),
     KILOMETER("km"),
@@ -13,14 +16,11 @@ public enum DistanceUnit {
         this.abbreviation = abbreviation;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
     public static DistanceUnit fromAbbreviation(String abbreviation) {
         return Arrays.stream(values())
                 .filter(enumValue -> enumValue.getAbbreviation().equals(abbreviation))
-                .findFirst().orElseThrow(IllegalArgumentException::new);
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
 }
