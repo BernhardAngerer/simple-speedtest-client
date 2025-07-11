@@ -77,7 +77,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>at.bernhardangerer.speedtestclient.SpeedtestCli</mainClass>
+                                    <mainClass>at.bernhardangerer.speedtestclient.controller.SpeedtestCli</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

@@ -1,4 +1,4 @@
-package at.bernhardangerer.speedtestclient;
+package at.bernhardangerer.speedtestclient.controller;
 
 import at.bernhardangerer.speedtestclient.model.ConfigSetting;
 import at.bernhardangerer.speedtestclient.model.Server;
@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-import static at.bernhardangerer.speedtestclient.SpeedtestController.runSpeedTest;
+import static at.bernhardangerer.speedtestclient.controller.SpeedtestController.runSpeedTest;
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.DEDICATED_SERVER_HOST;
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.LIST_SERVER_HOSTS;
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.NO_DOWNLOAD;

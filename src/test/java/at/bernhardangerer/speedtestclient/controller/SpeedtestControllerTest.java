@@ -1,4 +1,4 @@
-package at.bernhardangerer.speedtestclient;
+package at.bernhardangerer.speedtestclient.controller;
 
 import at.bernhardangerer.speedtestclient.exception.SpeedtestException;
 import at.bernhardangerer.speedtestclient.model.Client;

@@ -1,4 +1,4 @@
-package at.bernhardangerer.speedtestclient;
+package at.bernhardangerer.speedtestclient.controller;
 
 import at.bernhardangerer.speedtestclient.model.ConfigSetting;
 import at.bernhardangerer.speedtestclient.model.DownloadSetting;
