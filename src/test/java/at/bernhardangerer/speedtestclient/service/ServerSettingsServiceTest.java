@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class ServerSettingsServiceTest {
 
     @Test
     @SuppressWarnings("checkstyle:VariableDeclarationUsageDistance")
-    public void getServersFromXML() throws ParsingException, MissingResultException {
-        final List<Server> result = ServerSettingsService.getServersFromXML(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    public void getServersFromXml() throws ParsingException, MissingResultException {
+        final List<Server> result = ServerSettingsService.getServersFromXml(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<settings>\n"
                 + "<servers>\n"
                 + "<server url=\"http://gyor-speedtest.zt.hu:8080/speedtest/upload.php\" lat=\"47.6875\" lon=\"17.6504\" name=\"a city\" "
@@ -47,6 +49,11 @@ public final class ServerSettingsServiceTest {
         Assertions.assertNotNull(result);
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(10, result.size());
+    }
+
+    @Test
+    public void getServersFromXmlInvalidParameter() {
+        assertThrows(IllegalArgumentException.class, () -> ServerSettingsService.getServersFromXml(null));
     }
 
     @Test
@@ -84,6 +91,17 @@ public final class ServerSettingsServiceTest {
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(3, result.size());
         Assertions.assertTrue(result.values().stream().allMatch(server -> server.getId() >= 7 && server.getId() <= 9));
+    }
+
+    @Test
+    public void findClosestServersInvalidParameter() {
+        assertThrows(IllegalArgumentException.class,
+                () -> ServerSettingsService.findClosestServers(47.6700, 17.6400, 5, DistanceUnit.KILOMETER, null));
+    }
+
+    @Test
+    public void requestServerListInvalidParameter() {
+        assertThrows(IllegalArgumentException.class, () -> ServerSettingsService.requestServerList(0));
     }
 
 }

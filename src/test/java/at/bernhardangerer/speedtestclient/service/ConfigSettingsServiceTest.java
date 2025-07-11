@@ -5,11 +5,13 @@ import at.bernhardangerer.speedtestclient.model.ConfigSetting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class ConfigSettingsServiceTest {
 
     @Test
-    public void getFromXML() throws ParsingException {
-        final ConfigSetting result = ConfigSettingsService.getSettingFromXML(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    public void getSettingFromXml() throws ParsingException {
+        final ConfigSetting result = ConfigSettingsService.getSettingFromXml(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<settings>\n"
                 + "<client ip=\"37.19.195.144\" lat=\"48.1936\" lon=\"16.3726\" isp=\"Datacamp Limited\" isprating=\"3.7\" "
                 + "rating=\"0\" ispdlavg=\"0\" ispulavg=\"0\" loggedin=\"0\" country=\"AT\" />\n"
@@ -39,6 +41,11 @@ public final class ConfigSettingsServiceTest {
         Assertions.assertEquals(4, result.getDownload().getThreadsPerUrl());
         Assertions.assertNotNull(result.getUpload());
         Assertions.assertEquals(5, result.getUpload().getRatio());
+    }
+
+    @Test
+    public void getSettingFromXmlInvalidParameter() {
+        assertThrows(IllegalArgumentException.class, () -> ConfigSettingsService.getSettingFromXml(null));
     }
 
 }

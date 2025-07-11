@@ -17,11 +17,14 @@ import at.bernhardangerer.speedtestclient.service.ShareUrlService;
 import at.bernhardangerer.speedtestclient.service.UploadService;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +42,8 @@ import static org.mockito.Mockito.when;
 
 public final class SpeedtestControllerTest {
 
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
     private ConfigSetting configSetting;
     private Client client;
     private DownloadSetting downloadSetting;
@@ -50,6 +55,8 @@ public final class SpeedtestControllerTest {
 
     @BeforeEach
     public void setup() {
+        System.setOut(new PrintStream(outContent));
+
         client = mock(Client.class);
         when(client.getIsp()).thenReturn("Test ISP");
         when(client.getIpAddress()).thenReturn("127.0.0.1");
@@ -82,6 +89,11 @@ public final class SpeedtestControllerTest {
 
         uploadResult = mock(TransferTestResult.class);
         when(uploadResult.getRateInMbps()).thenReturn(20.0);
+    }
+
+    @AfterEach
+    void restoreStreams() {
+        System.setOut(originalOut);
     }
 
     @Test
@@ -120,6 +132,19 @@ public final class SpeedtestControllerTest {
             assertEquals(downloadResult, result.getDownload());
             assertEquals(uploadResult, result.getUpload());
             assertEquals("http://share.url", result.getShareUrl());
+
+            final String output = outContent.toString();
+            final String expectedOutput = "Retrieving speedtest.net configuration...\n" +
+                    "Testing from Test ISP (127.0.0.1)...\n" +
+                    "Retrieving speedtest.net server list...\n" +
+                    "Selecting best server based on ping...\n" +
+                    "Hosted by Test Sponsor (Test Server) [12,30 km]: 10,50 ms\n" +
+                    "Testing download speed\n" +
+                    "Download: 50,00 Mbits/s\n" +
+                    "Testing upload speed\n" +
+                    "Upload: 20,00 Mbits/s\n" +
+                    "Share results: http://share.url\n";
+            assertEquals(expectedOutput, output);
         }
     }
 

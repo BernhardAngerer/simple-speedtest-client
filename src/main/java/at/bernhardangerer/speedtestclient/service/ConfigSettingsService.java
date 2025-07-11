@@ -18,7 +18,7 @@ public final class ConfigSettingsService {
     private ConfigSettingsService() {
     }
 
-    static ConfigSetting getSettingFromXML(byte[] xml) throws ParsingException {
+    static ConfigSetting getSettingFromXml(byte[] xml) throws ParsingException {
         if (xml != null) {
             try (InputStream is = new ByteArrayInputStream(xml)) {
                 final JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);
@@ -35,7 +35,7 @@ public final class ConfigSettingsService {
     public static ConfigSetting requestSetting() throws MissingResultException, ServerRequestException, ParsingException {
         final byte[] bytes = HttpGetClient.get(CONFIG_URL);
         if (bytes != null) {
-            return getSettingFromXML(bytes);
+            return getSettingFromXml(bytes);
         } else {
             throw new MissingResultException("Missing result for config settings request");
         }

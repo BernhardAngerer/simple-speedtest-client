@@ -36,7 +36,7 @@ public final class ServerSettingsService {
     private ServerSettingsService() {
     }
 
-    static List<Server> getServersFromXML(byte[] bytes) throws ParsingException, MissingResultException {
+    static List<Server> getServersFromXml(byte[] bytes) throws ParsingException, MissingResultException {
         if (bytes != null) {
             try (InputStream is = new ByteArrayInputStream(bytes)) {
                 final JAXBContext jaxbContext = JAXBContext.newInstance(ServerSetting.class);
@@ -61,7 +61,7 @@ public final class ServerSettingsService {
                     .map(url -> {
                         try {
                             final byte[] bytes = HttpGetClient.get(String.format("%s?threads=%d", url, threadsPerUrl));
-                            return getServersFromXML(bytes);
+                            return getServersFromXml(bytes);
                         } catch (ParsingException | MissingResultException | ServerRequestException e) {
                             logger.error(e.getMessage(), e);
                             return null;
