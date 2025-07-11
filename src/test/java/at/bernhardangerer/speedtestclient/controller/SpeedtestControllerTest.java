@@ -134,16 +134,16 @@ public final class SpeedtestControllerTest {
             assertEquals("http://share.url", result.getShareUrl());
 
             final String output = outContent.toString();
-            final String expectedOutput = "Retrieving speedtest.net configuration...\n" +
-                    "Testing from Test ISP (127.0.0.1)...\n" +
-                    "Retrieving speedtest.net server list...\n" +
-                    "Selecting best server based on ping...\n" +
-                    "Hosted by Test Sponsor (Test Server) [12,30 km]: 10,50 ms\n" +
-                    "Testing download speed\n" +
-                    "Download: 50,00 Mbits/s\n" +
-                    "Testing upload speed\n" +
-                    "Upload: 20,00 Mbits/s\n" +
-                    "Share results: http://share.url\n";
+            final String expectedOutput = "Retrieving speedtest.net configuration...\n"
+                    + "Testing from Test ISP (127.0.0.1)...\n"
+                    + "Retrieving speedtest.net server list...\n"
+                    + "Selecting best server based on ping...\n"
+                    + "Hosted by Test Sponsor (Test Server) [12,30 km]: 10,50 ms\n"
+                    + "Testing download speed\n"
+                    + "Download: 50,00 Mbits/s\n"
+                    + "Testing upload speed\n"
+                    + "Upload: 20,00 Mbits/s\n"
+                    + "Share results: http://share.url\n";
             assertEquals(expectedOutput, output);
         }
     }

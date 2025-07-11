@@ -76,9 +76,9 @@ class SpeedtestCliTest {
             SpeedtestCli.main(args);
 
             final String output = outContent.toString();
-            final String expectedOutput = "List of valid server hosts:\n" +
-                    "server1.example.com\n" +
-                    "server2.example.com\n";
+            final String expectedOutput = "List of valid server hosts:\n"
+                    + "server1.example.com\n"
+                    + "server2.example.com\n";
             assertEquals(expectedOutput, output);
 
             controllerMock.verify(() ->
