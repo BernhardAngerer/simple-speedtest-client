@@ -1,24 +1,27 @@
 # Simple Speedtest-Client
-Java-library and command line interface (CLI) for testing internet bandwidth using speedtest.net
 
-A simplified Java-implementation of Matt Martz' speedtest-cli (https://github.com/sivel/speedtest-cli)
+A Java library and command-line interface (CLI) for testing internet bandwidth using [speedtest.net](https://www.speedtest.net/).
+This is a simplified Java implementation of [Matt Martz's speedtest-cli](https://github.com/sivel/speedtest-cli).
 
-## Technical requirements:
-+ Java 11+
-+ Maven
+## ✅ Requirements
+- Java 11+
+- Maven
 
-## Usage:
-### Build JAR file(s):
-Called from command line: 
+## ⚙️ Building the Project
+To build the JAR using Maven:
 ```bash
 mvn clean install
 ```
 
-### Use CLI:
-Called from command line: 
+## 🚀 Usage
+
+### 💻 CLI Mode
+To run the CLI client:
 ```bash
 java -jar simple-speedtest-client-2.1.0.jar
 ```
+
+Available CLI Parameters:
 ```bash
 usage: Optional parameters:
  -h,--dedicatedServerHost <HOST>   Dedicated server host to run the tests
@@ -31,7 +34,7 @@ usage: Optional parameters:
                                    speedtest.net share results image
 ```
 
-Example:
+Example CLI Output:
 ```bash
 $ java -jar simple-speedtest-client-2.1.0.jar 
 Retrieving speedtest.net configuration...
@@ -45,15 +48,17 @@ Testing upload speed...................................................
 Upload: 19,24 Mbits/s
 ```
 
-### Use as Java library:
-Called from Java:
+### 📚 Java Library Usage
+Use the library directly in Java:
 ```java
-// Full test can take up to 25 seconds
+// Note: Full test may take up to 25 seconds
 try {
   SpeedtestResult result = SpeedtestController.runSpeedTest();
 } catch (SpeedtestException e) {
   e.printStackTrace();
 }
 ```
-#### How to add project dependency to Maven or Gradle:
+
+## 📦 Dependency (Maven / Gradle)
+Add the dependency via JitPack:
 https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/2.1.0
