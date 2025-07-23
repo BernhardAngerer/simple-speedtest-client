@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,6 +56,7 @@ public final class SpeedtestControllerTest {
 
     @BeforeEach
     public void setup() {
+        Locale.setDefault(Locale.US);
         System.setOut(new PrintStream(outContent));
 
         client = mock(Client.class);
@@ -138,11 +140,11 @@ public final class SpeedtestControllerTest {
                     + "Testing from Test ISP (127.0.0.1)...\n"
                     + "Retrieving speedtest.net server list...\n"
                     + "Selecting best server based on ping...\n"
-                    + "Hosted by Test Sponsor (Test Server) [12,30 km]: 10,50 ms\n"
+                    + "Hosted by Test Sponsor (Test Server) [12.30 km]: 10.50 ms\n"
                     + "Testing download speed\n"
-                    + "Download: 50,00 Mbits/s\n"
+                    + "Download: 50.00 Mbits/s\n"
                     + "Testing upload speed\n"
-                    + "Upload: 20,00 Mbits/s\n"
+                    + "Upload: 20.00 Mbits/s\n"
                     + "Share results: http://share.url\n";
             assertEquals(expectedOutput, output);
         }
