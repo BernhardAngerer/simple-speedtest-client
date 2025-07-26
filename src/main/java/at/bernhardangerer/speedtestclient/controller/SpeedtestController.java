@@ -1,8 +1,17 @@
 package at.bernhardangerer.speedtestclient.controller;
 
 import at.bernhardangerer.speedtestclient.exception.SpeedtestException;
-import at.bernhardangerer.speedtestclient.model.*;
-import at.bernhardangerer.speedtestclient.service.*;
+import at.bernhardangerer.speedtestclient.model.ConfigSetting;
+import at.bernhardangerer.speedtestclient.model.LatencyTestResult;
+import at.bernhardangerer.speedtestclient.model.Server;
+import at.bernhardangerer.speedtestclient.model.SpeedtestResult;
+import at.bernhardangerer.speedtestclient.model.TransferTestResult;
+import at.bernhardangerer.speedtestclient.service.ConfigSettingsService;
+import at.bernhardangerer.speedtestclient.service.DownloadService;
+import at.bernhardangerer.speedtestclient.service.LatencyService;
+import at.bernhardangerer.speedtestclient.service.ServerSettingsService;
+import at.bernhardangerer.speedtestclient.service.ShareUrlService;
+import at.bernhardangerer.speedtestclient.service.UploadService;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
 

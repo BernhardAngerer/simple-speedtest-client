@@ -64,6 +64,7 @@ public final class SpeedtestControllerTest {
         when(client.getIpAddress()).thenReturn("127.0.0.1");
         when(client.getLat()).thenReturn(40.0);
         when(client.getLon()).thenReturn(-74.0);
+        when(client.getCountry()).thenReturn("AT");
 
         downloadSetting = mock(DownloadSetting.class);
         when(downloadSetting.getThreadsPerUrl()).thenReturn(4);
@@ -81,6 +82,7 @@ public final class SpeedtestControllerTest {
         when(server.getName()).thenReturn("Test Server");
         when(server.getUrl()).thenReturn("http://testserver.com");
         when(server.getId()).thenReturn(123);
+        when(server.getCountryCode()).thenReturn("AT");
 
         latencyResult = mock(LatencyTestResult.class);
         when(latencyResult.getLatency()).thenReturn(10.5);
@@ -137,10 +139,10 @@ public final class SpeedtestControllerTest {
 
             final String output = outContent.toString();
             final String expectedOutput = "Retrieving speedtest.net configuration...\n"
-                    + "Testing from Test ISP (127.0.0.1)...\n"
+                    + "Testing from Test ISP (127.0.0.1, AT)...\n"
                     + "Retrieving speedtest.net server list...\n"
                     + "Selecting best server based on ping...\n"
-                    + "Hosted by Test Sponsor (Test Server) [12.30 km]: 10.50 ms\n"
+                    + "Hosted by Test Sponsor (Test Server, AT) [12.30 km]: 10.50 ms\n"
                     + "Testing download speed\n"
                     + "Download: 50.00 Mbits/s\n"
                     + "Testing upload speed\n"
