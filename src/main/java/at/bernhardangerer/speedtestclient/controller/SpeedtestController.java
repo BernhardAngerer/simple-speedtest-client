@@ -1,17 +1,8 @@
 package at.bernhardangerer.speedtestclient.controller;
 
 import at.bernhardangerer.speedtestclient.exception.SpeedtestException;
-import at.bernhardangerer.speedtestclient.model.ConfigSetting;
-import at.bernhardangerer.speedtestclient.model.LatencyTestResult;
-import at.bernhardangerer.speedtestclient.model.Server;
-import at.bernhardangerer.speedtestclient.model.SpeedtestResult;
-import at.bernhardangerer.speedtestclient.model.TransferTestResult;
-import at.bernhardangerer.speedtestclient.service.ConfigSettingsService;
-import at.bernhardangerer.speedtestclient.service.DownloadService;
-import at.bernhardangerer.speedtestclient.service.LatencyService;
-import at.bernhardangerer.speedtestclient.service.ServerSettingsService;
-import at.bernhardangerer.speedtestclient.service.ShareUrlService;
-import at.bernhardangerer.speedtestclient.service.UploadService;
+import at.bernhardangerer.speedtestclient.model.*;
+import at.bernhardangerer.speedtestclient.service.*;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
 
@@ -29,13 +20,13 @@ public final class SpeedtestController {
                 true, true, false, false, null);
     }
 
-    public static SpeedtestResult runSpeedTest(DistanceUnit distanceUnit, boolean testDownload, boolean testUpload,
-                                               boolean generateShareUrl) throws SpeedtestException {
+    public static SpeedtestResult runSpeedTest(final DistanceUnit distanceUnit, final boolean testDownload, final boolean testUpload,
+                                               final boolean generateShareUrl) throws SpeedtestException {
         return runSpeedTest(distanceUnit, testDownload, testUpload, generateShareUrl, false, null);
     }
 
-    public static SpeedtestResult runSpeedTest(DistanceUnit distanceUnit, boolean testDownload, boolean testUpload,
-                                               boolean generateShareUrl, Server dedicatedServer) throws SpeedtestException {
+    public static SpeedtestResult runSpeedTest(final DistanceUnit distanceUnit, final boolean testDownload, final boolean testUpload,
+                                               final boolean generateShareUrl, final Server dedicatedServer) throws SpeedtestException {
         return runSpeedTest(distanceUnit, testDownload, testUpload, generateShareUrl, false, dedicatedServer);
     }
 
@@ -50,8 +41,8 @@ public final class SpeedtestController {
                 }
                 final ConfigSetting configSetting = ConfigSettingsService.requestSetting();
                 if (generateOutput) {
-                    System.out.printf("Testing from %s (%s)...\n",
-                            configSetting.getClient().getIsp(), configSetting.getClient().getIpAddress());
+                    System.out.printf("Testing from %s (%s, %s)...\n", configSetting.getClient().getIsp(),
+                            configSetting.getClient().getIpAddress(), configSetting.getClient().getCountry());
                 }
 
                 final List<Server> serverList;
@@ -73,8 +64,8 @@ public final class SpeedtestController {
                 }
                 final Map.Entry<Server, LatencyTestResult> fastestServer = LatencyService.getFastestServer(closestServers);
                 if (generateOutput) {
-                    System.out.printf("Hosted by %s (%s) [%,.2f %s]: %,.2f ms\n",
-                            fastestServer.getKey().getSponsor(), fastestServer.getKey().getName(),
+                    System.out.printf("Hosted by %s (%s, %s) [%,.2f %s]: %,.2f ms\n",
+                            fastestServer.getKey().getSponsor(), fastestServer.getKey().getName(), fastestServer.getKey().getCountryCode(),
                             fastestServer.getValue().getDistance(), distanceUnit.getAbbreviation(), fastestServer.getValue().getLatency());
                 }
 
