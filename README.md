@@ -1,3 +1,6 @@
+[![Maven Package](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-publish.yml)
+[![Maven Package](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml/badge.svg)](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml)
+
 # ⏱️ Simple Speedtest-Client
 
 A **Java library and CLI** tool for measuring internet bandwidth using [speedtest.net](https://www.speedtest.net/).  
