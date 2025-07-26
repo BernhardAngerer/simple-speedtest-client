@@ -24,7 +24,7 @@ mvn clean install
 ```
 The JAR will be located in target/, e.g.:
 ```bash
-target/simple-speedtest-client-2.1.0.jar
+target/simple-speedtest-client-2.1.1.jar
 ```
 
 ## 🚀 Usage
@@ -32,7 +32,7 @@ target/simple-speedtest-client-2.1.0.jar
 ### 💻 CLI Usage
 To run the CLI client:
 ```bash
-java -jar simple-speedtest-client-2.1.0.jar
+java -jar simple-speedtest-client-2.1.1.jar
 ```
 
 #### 🔧 CLI Options
@@ -48,7 +48,7 @@ usage: Optional parameters:
 
 #### 📈 Example Output
 ```bash
-$ java -jar simple-speedtest-client-2.1.0.jar 
+$ java -jar simple-speedtest-client-2.1.1.jar 
 
 Retrieving speedtest.net configuration...
 Testing from Telekom Austria (193.81.52.87, AT)...
@@ -84,4 +84,4 @@ try {
 
 ## 📦 Dependency (Maven / Gradle)
 Add the dependency via JitPack:
-https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/2.1.0
+https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/2.1.1
