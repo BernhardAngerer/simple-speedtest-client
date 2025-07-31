@@ -38,12 +38,23 @@ java -jar simple-speedtest-client-2.1.1.jar
 #### 🔧 CLI Options
 ```bash
 usage: Optional parameters:
- -h,  --dedicatedServerHost <HOST>   Run test against a specific server host
- -l,  --listServerHosts              Print list of available server hosts
- -nd, --noDownload                   Skip download test
- -nu, --noUpload                     Skip upload test
- -s,--share                          Generate and provide an URL of the
-                                     speedtest.net share results image
+ -h,--dedicatedServerHost <HOST>   Dedicated server host to run the tests
+                                   against
+ -l,--listServerHosts              Provide a list of server hosts to run
+                                   the tests against
+ -nd,--noDownload                  Do not perform download test
+ -nu,--noUpload                    Do not perform upload test
+ -of,--outputFormat <FORMAT>       Output format of results (default:
+                                   console)
+                                   Available formats:
+                                   console — human-readable output to the
+                                   console
+                                   json    — machine-readable JSON format
+                                   xml     — machine-readable XML format
+                                   csv     — comma-separated values format
+ -s,--share                        Generate and provide an URL to the
+                                   speedtest.net share results image
+
 ```
 
 #### 📈 Example Output
@@ -75,8 +86,8 @@ try {
     System.out.printf("Latency: %.2f ms%n", result.getLatency().getLatency());
     System.out.printf("Server: %s (%s, %s)%n",
                         result.getServer().getSponsor(),
-                        result.getServer().getName(),
-                        result.getServer().getCountryCode());
+                        result.getServer().getCity(),
+                        result.getServer().getIsoAlpha2CountryCode());
 } catch (SpeedtestException e) {
     e.printStackTrace();
 }
