@@ -16,15 +16,12 @@ import lombok.NoArgsConstructor;
 public final class UploadSetting {
 
     @XmlAttribute(name = "ratio")
-    private int ratio;
-
+    private Integer ratio;
     @XmlAttribute(name = "maxchunkcount")
-    private int maxChunkCount;
-
+    private Integer maxChunkCount;
     @XmlAttribute(name = "threads")
-    private int threads;
-
+    private Integer threads;
     @XmlAttribute(name = "testlength")
-    private int testLength;
+    private Integer testLength;
 
 }

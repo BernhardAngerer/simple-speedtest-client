@@ -13,10 +13,8 @@ public final class ConfigSetting {
 
     @XmlElement(name = "client")
     private Client client;
-
     @XmlElement(name = "download")
     private DownloadSetting download;
-
     @XmlElement(name = "upload")
     private UploadSetting upload;
 

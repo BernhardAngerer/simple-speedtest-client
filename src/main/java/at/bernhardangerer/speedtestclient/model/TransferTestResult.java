@@ -2,15 +2,18 @@ package at.bernhardangerer.speedtestclient.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public final class TransferTestResult {
-    private double rateInMbps;
-    private int bytes;
-    private long durationInMs;
 
-    public TransferTestResult(int bytes, long durationInMs) {
+    private Double rateInMbps;
+    private Integer bytes;
+    private Long durationInMs;
+
+    public TransferTestResult(Integer bytes, Long durationInMs) {
         this.bytes = bytes;
         this.durationInMs = durationInMs;
     }

@@ -17,28 +17,20 @@ public final class Server {
 
     @XmlAttribute(name = "url")
     private String url;
-
     @XmlAttribute(name = "lat")
-    private double lat;
-
+    private Double lat;
     @XmlAttribute(name = "lon")
-    private double lon;
-
+    private Double lon;
     @XmlAttribute(name = "name")
-    private String name;
-
+    private String city;
     @XmlAttribute(name = "country")
     private String country;
-
     @XmlAttribute(name = "cc")
-    private String countryCode;
-
+    private String isoAlpha2CountryCode;
     @XmlAttribute(name = "sponsor")
     private String sponsor;
-
     @XmlAttribute(name = "id")
-    private int id;
-
+    private Integer id;
     @XmlAttribute(name = "host")
     private String host;
 

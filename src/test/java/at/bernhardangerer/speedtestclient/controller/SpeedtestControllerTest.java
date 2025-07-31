@@ -64,7 +64,7 @@ public final class SpeedtestControllerTest {
         when(client.getIpAddress()).thenReturn("127.0.0.1");
         when(client.getLat()).thenReturn(40.0);
         when(client.getLon()).thenReturn(-74.0);
-        when(client.getCountry()).thenReturn("AT");
+        when(client.getIsoAlpha2CountryCode()).thenReturn("AT");
 
         downloadSetting = mock(DownloadSetting.class);
         when(downloadSetting.getThreadsPerUrl()).thenReturn(4);
@@ -79,10 +79,10 @@ public final class SpeedtestControllerTest {
 
         server = mock(Server.class);
         when(server.getSponsor()).thenReturn("Test Sponsor");
-        when(server.getName()).thenReturn("Test Server");
+        when(server.getCity()).thenReturn("Test Server");
         when(server.getUrl()).thenReturn("http://testserver.com");
         when(server.getId()).thenReturn(123);
-        when(server.getCountryCode()).thenReturn("AT");
+        when(server.getIsoAlpha2CountryCode()).thenReturn("AT");
 
         latencyResult = mock(LatencyTestResult.class);
         when(latencyResult.getLatency()).thenReturn(10.5);

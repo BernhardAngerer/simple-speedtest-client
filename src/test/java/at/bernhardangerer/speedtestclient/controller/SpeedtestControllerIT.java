@@ -6,6 +6,8 @@ import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 public final class SpeedtestControllerIT {
 
     @Test
@@ -15,7 +17,8 @@ public final class SpeedtestControllerIT {
         Assertions.assertNotNull(result.getLatency());
         Assertions.assertNotNull(result.getDownload());
         Assertions.assertNotNull(result.getUpload());
-        Assertions.assertTrue(result.getTimestamp() <= System.currentTimeMillis());
+        Assertions.assertTrue(result.getStartTime().isBefore(LocalDateTime.now()));
+        Assertions.assertTrue(result.getEndTime().isBefore(LocalDateTime.now()));
         Assertions.assertNull(result.getShareUrl());
     }
 

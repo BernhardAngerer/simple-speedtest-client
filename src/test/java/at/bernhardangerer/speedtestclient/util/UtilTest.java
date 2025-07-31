@@ -4,6 +4,7 @@ import at.bernhardangerer.speedtestclient.exception.UnsupportedUnitException;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,5 +65,76 @@ public final class UtilTest {
         assertEquals(5, result.size());
         assertTrue(result.containsKey("resultid"));
         assertEquals("17959022583", result.get("resultid"));
+    }
+
+    @Test
+    void testNullValue() {
+        assertEquals("", Util.formatCsvValue(null));
+    }
+
+    @Test
+    void testSimpleString() {
+        assertEquals("hello", Util.formatCsvValue("hello"));
+    }
+
+    @Test
+    void testStringWithComma() {
+        assertEquals("\"hello,world\"", Util.formatCsvValue("hello,world"));
+    }
+
+    @Test
+    void testStringWithQuote() {
+        assertEquals("\"he\"\"llo\"\"\"", Util.formatCsvValue("he\"llo\""));
+    }
+
+    @Test
+    void testStringWithNewline() {
+        assertEquals("\"hello\nworld\"", Util.formatCsvValue("hello\nworld"));
+    }
+
+    @Test
+    void testIntegerValue() {
+        assertEquals("42", Util.formatCsvValue(42));
+    }
+
+    @Test
+    void testDoubleValue() {
+        assertEquals("3.140000", Util.formatCsvValue(3.14));
+    }
+
+    @Test
+    void testFloatValue() {
+        assertEquals("2.720000", Util.formatCsvValue(2.72f));
+    }
+
+    @Test
+    void testBigDecimalValue() {
+        assertEquals("1234.567800", Util.formatCsvValue(new BigDecimal("1234.5678")));
+    }
+
+    @Test
+    void testNumberWithCommaAfterFormatting() {
+        // 1000.5 becomes "1000.500000" – no comma, so no quotes
+        assertEquals("1000.500000", Util.formatCsvValue(1000.5));
+    }
+
+    @Test
+    void testStringWithCarriageReturn() {
+        assertEquals("\"line1\rline2\"", Util.formatCsvValue("line1\rline2"));
+    }
+
+    @Test
+    void testStringStartingWithSpace() {
+        assertEquals("\" hello\"", Util.formatCsvValue(" hello"));
+    }
+
+    @Test
+    void testStringEndingWithSpace() {
+        assertEquals("\"hello \"", Util.formatCsvValue("hello "));
+    }
+
+    @Test
+    void testStringWithBothLeadingAndTrailingSpaces() {
+        assertEquals("\" hello world \"", Util.formatCsvValue(" hello world "));
     }
 }

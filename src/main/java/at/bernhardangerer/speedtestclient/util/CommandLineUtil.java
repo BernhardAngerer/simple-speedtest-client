@@ -9,12 +9,14 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public final class CommandLineUtil {
-
     public static final String NO_DOWNLOAD = "noDownload";
     public static final String NO_UPLOAD = "noUpload";
     public static final String SHARE = "share";
     public static final String DEDICATED_SERVER_HOST = "dedicatedServerHost";
     public static final String LIST_SERVER_HOSTS = "listServerHosts";
+    public static final String OUTPUT_FORMAT = "outputFormat";
+    public static final String HOST = "HOST";
+    public static final String FORMAT = "FORMAT";
 
     private CommandLineUtil() {
     }
@@ -35,12 +37,18 @@ public final class CommandLineUtil {
         options.addOption(createOption("nd", NO_DOWNLOAD, null, "Do not perform download test"));
         options.addOption(createOption("nu", NO_UPLOAD, null, "Do not perform upload test"));
         options.addOption(createOption("s", SHARE, null, "Generate and provide an URL to the speedtest.net share results image"));
-        options.addOption(createOption("h", DEDICATED_SERVER_HOST, "HOST", "Dedicated server host to run the tests against"));
+        options.addOption(createOption("h", DEDICATED_SERVER_HOST, HOST, "Dedicated server host to run the tests against"));
         options.addOption(createOption("l", LIST_SERVER_HOSTS, null, "Provide a list of server hosts to run the tests against"));
+        options.addOption(createOption("of", OUTPUT_FORMAT, FORMAT, "Output format of results (default: console)\n"
+                + "Available formats:\n"
+                + "console — human-readable output to the console\n"
+                + "json    — machine-readable JSON format\n"
+                + "xml     — machine-readable XML format\n"
+                + "csv     — comma-separated values format"));
         return options;
     }
 
-    private static Option createOption(String shortName, String longName, String argName, String description) {
+    private static Option createOption(final String shortName, final String longName, final String argName, final String description) {
         return Option.builder(shortName)
                 .longOpt(longName)
                 .argName(argName)

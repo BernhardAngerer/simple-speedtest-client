@@ -15,6 +15,7 @@ import at.bernhardangerer.speedtestclient.service.UploadService;
 import at.bernhardangerer.speedtestclient.type.DistanceUnit;
 import at.bernhardangerer.speedtestclient.util.Util;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,22 +42,23 @@ public final class SpeedtestController {
 
     @SuppressWarnings("checkstyle:MagicNumber")
     static SpeedtestResult runSpeedTest(final DistanceUnit distanceUnit, final boolean testDownload, final boolean testUpload,
-                                        final boolean generateShareUrl, final boolean generateOutput, final Server dedicatedServer)
+                                        final boolean generateShareUrl, final boolean consoleOutput, final Server dedicatedServer)
             throws SpeedtestException {
         if (distanceUnit != null) {
             try {
-                if (generateOutput) {
+                final LocalDateTime startTime = LocalDateTime.now();
+                if (consoleOutput) {
                     System.out.println("Retrieving speedtest.net configuration...");
                 }
                 final ConfigSetting configSetting = ConfigSettingsService.requestSetting();
-                if (generateOutput) {
+                if (consoleOutput) {
                     System.out.printf("Testing from %s (%s, %s)...\n", configSetting.getClient().getIsp(),
-                            configSetting.getClient().getIpAddress(), configSetting.getClient().getCountry());
+                            configSetting.getClient().getIpAddress(), configSetting.getClient().getIsoAlpha2CountryCode());
                 }
 
                 final List<Server> serverList;
                 if (dedicatedServer == null) {
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.println("Retrieving speedtest.net server list...");
                     }
                     serverList = ServerSettingsService.requestServerList(configSetting.getDownload().getThreadsPerUrl());
@@ -68,40 +70,41 @@ public final class SpeedtestController {
                         Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("ClosestServers.maxNumber"))),
                         distanceUnit, serverList);
 
-                if (generateOutput && dedicatedServer == null) {
+                if (consoleOutput && dedicatedServer == null) {
                     System.out.println("Selecting best server based on ping...");
                 }
                 final Map.Entry<Server, LatencyTestResult> fastestServer = LatencyService.getFastestServer(closestServers);
-                if (generateOutput) {
+                if (consoleOutput) {
                     System.out.printf("Hosted by %s (%s, %s) [%,.2f %s]: %,.2f ms\n",
-                            fastestServer.getKey().getSponsor(), fastestServer.getKey().getName(), fastestServer.getKey().getCountryCode(),
-                            fastestServer.getValue().getDistance(), distanceUnit.getAbbreviation(), fastestServer.getValue().getLatency());
+                            fastestServer.getKey().getSponsor(), fastestServer.getKey().getCity(),
+                            fastestServer.getKey().getIsoAlpha2CountryCode(), fastestServer.getValue().getDistance(),
+                            distanceUnit.getAbbreviation(), fastestServer.getValue().getLatency());
                 }
 
                 TransferTestResult downloadResult = null;
                 if (testDownload) {
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.print("Testing download speed");
                     }
                     downloadResult = DownloadService.testDownload(fastestServer.getKey().getUrl(),
-                            configSetting.getDownload(), generateOutput ? Util::printDot : () -> {
+                            configSetting.getDownload(), consoleOutput ? Util::printDot : () -> {
                             });
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.printf("\nDownload: %,.2f Mbits/s\n", downloadResult.getRateInMbps());
                     }
                 }
 
                 TransferTestResult uploadResult = null;
                 if (testUpload) {
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.print("Testing upload speed");
                     }
                     uploadResult = UploadService.testUpload(fastestServer.getKey().getUrl(),
                             configSetting.getUpload(), (downloadResult != null && downloadResult.getRateInMbps() > 0.1)
                                     ? 8 : configSetting.getUpload().getThreads(),
-                            generateOutput ? Util::printDot : () -> {
+                            consoleOutput ? Util::printDot : () -> {
                             });
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.printf("\nUpload: %,.2f Mbits/s\n", uploadResult.getRateInMbps());
                     }
                 }
@@ -110,16 +113,16 @@ public final class SpeedtestController {
                 if (generateShareUrl && uploadResult != null && downloadResult != null) {
                     shareUrl = ShareUrlService.createShareUrl(fastestServer.getKey().getId(), fastestServer.getValue().getLatency(),
                             uploadResult.getRateInMbps(), downloadResult.getRateInMbps());
-                    if (generateOutput) {
+                    if (consoleOutput) {
                         System.out.println("Share results: " + shareUrl);
                     }
                 }
 
-                return new SpeedtestResult(System.currentTimeMillis(), configSetting.getClient(), fastestServer.getKey(),
+                return new SpeedtestResult(startTime, LocalDateTime.now(), configSetting.getClient(), fastestServer.getKey(),
                         fastestServer.getValue(), downloadResult, uploadResult, shareUrl);
             } catch (Exception e) {
-                if (generateOutput) {
-                    System.out.println("Something went wrong");
+                if (consoleOutput) {
+                    System.err.println("Something went wrong");
                 }
                 throw new SpeedtestException(e);
             }

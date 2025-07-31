@@ -6,9 +6,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -19,7 +21,8 @@ public final class Util {
     }
 
     @SuppressWarnings("checkstyle:MagicNumber")
-    public static double calculateDistance(double lat1, double lon1, double lat2, double lon2, DistanceUnit distanceUnit)
+    public static double calculateDistance(final double lat1, final double lon1, final double lat2, final double lon2,
+                                           final DistanceUnit distanceUnit)
             throws UnsupportedUnitException {
         if (distanceUnit != null) {
             if (lat1 == lat2 && lon1 == lon2) {
@@ -51,7 +54,7 @@ public final class Util {
         System.out.print(".");
     }
 
-    public static Map<String, String> getQueryParams(String paramString) {
+    public static Map<String, String> getQueryParams(final String paramString) {
         if (paramString != null) {
             final Map<String, String> params = new HashMap<>();
             for (String param : paramString.split("&")) {
@@ -72,11 +75,11 @@ public final class Util {
     }
 
     @SuppressWarnings("checkstyle:MagicNumber")
-    public static double calculateMbps(int bytes, long timeInMs) {
+    public static double calculateMbps(final int bytes, final long timeInMs) {
         return (bytes * 8.0) / (timeInMs * 1000.0);
     }
 
-    public static String getConfigProperty(String key) {
+    public static String getConfigProperty(final String key) {
         if (key != null) {
             final String resource = "config.properties";
             try (InputStream is = Util.class.getClassLoader().getResourceAsStream(resource)) {
@@ -90,6 +93,34 @@ public final class Util {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    public static String formatCsvValue(final Object value) {
+        return formatCsvValue(value, Constant.COMMA);
+    }
+
+    public static String formatCsvValue(final Object value, final String delimiter) {
+        if (value == null) {
+            return "";
+        }
+
+        final String str;
+        if (value instanceof Double || value instanceof Float || value instanceof BigDecimal) {
+            str = String.format(Locale.US, "%.6f", ((Number) value).doubleValue());
+        } else {
+            str = value.toString();
+        }
+
+        final boolean needsEscaping = str.contains(Constant.DOUBLE_QUOTE)
+                || str.contains(delimiter)
+                || str.contains("\n")
+                || str.contains("\r")
+                || str.startsWith(Constant.SPACE)
+                || str.endsWith(Constant.SPACE);
+        if (needsEscaping) {
+            return Constant.DOUBLE_QUOTE + str.replace(Constant.DOUBLE_QUOTE, "\"\"") + Constant.DOUBLE_QUOTE;
+        }
+        return str;
     }
 
 }

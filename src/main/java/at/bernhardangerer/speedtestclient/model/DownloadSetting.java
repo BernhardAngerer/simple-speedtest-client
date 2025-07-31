@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 public final class DownloadSetting {
 
     @XmlAttribute(name = "testlength")
-    private int testLength;
+    private Integer testLength;
 
     @XmlAttribute(name = "threadsperurl")
-    private int threadsPerUrl;
+    private Integer threadsPerUrl;
 
 }
