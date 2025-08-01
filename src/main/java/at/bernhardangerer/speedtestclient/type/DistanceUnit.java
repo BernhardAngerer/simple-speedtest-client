@@ -16,7 +16,7 @@ public enum DistanceUnit {
         this.abbreviation = abbreviation;
     }
 
-    public static DistanceUnit fromAbbreviation(String abbreviation) {
+    public static DistanceUnit fromAbbreviation(final String abbreviation) {
         return Arrays.stream(values())
                 .filter(enumValue -> enumValue.getAbbreviation().equals(abbreviation))
                 .findFirst()

@@ -18,7 +18,7 @@ public final class ConfigSettingsService {
     private ConfigSettingsService() {
     }
 
-    static ConfigSetting getSettingFromXml(byte[] xml) throws ParsingException {
+    static ConfigSetting getSettingFromXml(final byte[] xml) throws ParsingException {
         if (xml != null) {
             try (InputStream is = new ByteArrayInputStream(xml)) {
                 final JAXBContext jaxbContext = JAXBContext.newInstance(ConfigSetting.class);

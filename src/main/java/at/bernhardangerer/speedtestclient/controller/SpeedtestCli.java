@@ -27,7 +27,7 @@ public final class SpeedtestCli {
     }
 
     @SuppressWarnings("checkstyle:UncommentedMain")
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final CommandLine cmd = getCommandLine(createOptions(), args);
         if (cmd != null) {
             try {

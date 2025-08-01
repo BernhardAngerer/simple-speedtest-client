@@ -24,7 +24,7 @@ public final class HttpPostClient extends AbstractHttpClient {
     private HttpPostClient() {
     }
 
-    public static TransferTestResult partialPostUploadData(String urlString, long timeoutTime, String dataString)
+    public static TransferTestResult partialPostUploadData(final String urlString, final long timeoutTime, final String dataString)
             throws ServerRequestException {
         if (urlString != null && dataString != null) {
             final int maxBufferSize = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Upload.maxBufferSize")));
@@ -65,7 +65,7 @@ public final class HttpPostClient extends AbstractHttpClient {
     }
 
     @SuppressWarnings("checkstyle:NestedTryDepth")
-    public static String postBodyWithSharedData(String urlString, String encodedBody) throws ServerRequestException {
+    public static String postBodyWithSharedData(final String urlString, final String encodedBody) throws ServerRequestException {
         if (urlString != null && encodedBody != null) {
             try {
                 final HttpURLConnection conn = createConnection(new URL(urlString), POST);

@@ -1,7 +1,7 @@
 package at.bernhardangerer.speedtestclient.exception;
 
 public final class SpeedtestException extends Exception {
-    public SpeedtestException(Exception exception) {
+    public SpeedtestException(final Exception exception) {
         super(exception);
     }
 }

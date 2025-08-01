@@ -6,7 +6,7 @@ import java.net.URL;
 
 public abstract class AbstractHttpClient {
 
-    static HttpURLConnection createConnection(URL url, String requestMethod) throws IOException {
+    static HttpURLConnection createConnection(final URL url, final String requestMethod) throws IOException {
         if (url != null && requestMethod != null) {
             final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setUseCaches(false);

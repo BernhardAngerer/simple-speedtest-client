@@ -36,7 +36,7 @@ public final class ServerSettingsService {
     private ServerSettingsService() {
     }
 
-    static List<Server> getServersFromXml(byte[] bytes) throws ParsingException, MissingResultException {
+    static List<Server> getServersFromXml(final byte[] bytes) throws ParsingException, MissingResultException {
         if (bytes != null) {
             try (InputStream is = new ByteArrayInputStream(bytes)) {
                 final JAXBContext jaxbContext = JAXBContext.newInstance(ServerSetting.class);
@@ -55,7 +55,7 @@ public final class ServerSettingsService {
         }
     }
 
-    public static List<Server> requestServerList(int threadsPerUrl) throws MissingResultException {
+    public static List<Server> requestServerList(final int threadsPerUrl) throws MissingResultException {
         if (threadsPerUrl > 0) {
             final List<Server> servers = SERVER_URLS.stream()
                     .map(url -> {
@@ -80,8 +80,9 @@ public final class ServerSettingsService {
         }
     }
 
-    public static Map<Double, Server> findClosestServers(double lat, double lon, int limit, DistanceUnit distanceUnit,
-                                                         List<Server> serverList) throws MissingResultException {
+    public static Map<Double, Server> findClosestServers(final double lat, final double lon, final int limit,
+                                                         final DistanceUnit distanceUnit, final List<Server> serverList)
+            throws MissingResultException {
         if (limit > 0 && distanceUnit != null && serverList != null && !serverList.isEmpty()) {
             final Map<Double, Server> closestServers = serverList.stream()
                     .collect(Collectors.toMap(

@@ -11,7 +11,7 @@ public final class DownloadTask implements Callable<TransferTestResult> {
     private final long timeoutTime;
     private final Callback callback;
 
-    public DownloadTask(String url, long timeoutTime, Callback callback) {
+    public DownloadTask(final String url, final long timeoutTime, final Callback callback) {
         this.url = url;
         this.timeoutTime = timeoutTime;
         this.callback = callback;

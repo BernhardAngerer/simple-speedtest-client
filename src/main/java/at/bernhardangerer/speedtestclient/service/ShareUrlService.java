@@ -18,7 +18,7 @@ public final class ShareUrlService {
     private ShareUrlService() {
     }
 
-    public static String createShareUrl(int serverId, double latency, double uploadMbps, double downloadMbps)
+    public static String createShareUrl(final int serverId, final double latency, final double uploadMbps, final double downloadMbps)
             throws MissingResultException, ServerRequestException {
         if (serverId > 0 && uploadMbps > 0 && downloadMbps > 0) {
             final int ping = (int) Math.round(latency);
@@ -39,7 +39,7 @@ public final class ShareUrlService {
         }
     }
 
-    static String generateMd5Hash(String data) {
+    static String generateMd5Hash(final String data) {
         if (data != null) {
             try {
                 final MessageDigest md = MessageDigest.getInstance("MD5");

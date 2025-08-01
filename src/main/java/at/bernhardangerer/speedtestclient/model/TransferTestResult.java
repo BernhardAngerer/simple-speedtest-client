@@ -13,7 +13,7 @@ public final class TransferTestResult {
     private Integer bytes;
     private Long durationInMs;
 
-    public TransferTestResult(Integer bytes, Long durationInMs) {
+    public TransferTestResult(final Integer bytes, final Long durationInMs) {
         this.bytes = bytes;
         this.durationInMs = durationInMs;
     }

@@ -63,13 +63,19 @@ public final class SpeedtestResultPrinter {
                 "downloadBytes", "downloadDurationMs", "uploadMbps", "uploadBytes", "uploadDurationMs", "shareUrl");
         System.out.println(CsvUtil.joinStrings(keys, finalDelimiter));
 
+        final List<Object> unformattedValues = createCsvValueList(speedtestResult);
+        final List<String> formattedValues = CsvUtil.formatCsvValues(unformattedValues, finalDelimiter);
+        System.out.println(CsvUtil.joinStrings(formattedValues, finalDelimiter));
+    }
+
+    private static List<Object> createCsvValueList(final SpeedtestResult speedtestResult) {
         final Client c = speedtestResult.getClient();
         final Server s = speedtestResult.getServer();
         final LatencyTestResult l = speedtestResult.getLatency();
         final TransferTestResult d = speedtestResult.getDownload();
         final TransferTestResult u = speedtestResult.getUpload();
 
-        final List<Object> unformattedValues = Arrays.asList(
+        return Arrays.asList(
                 speedtestResult.getStartTime(),
                 speedtestResult.getEndTime(),
                 c != null ? c.getIpAddress() : null,
@@ -96,8 +102,6 @@ public final class SpeedtestResultPrinter {
                 u != null ? u.getDurationInMs() : null,
                 speedtestResult.getShareUrl()
         );
-        final List<String> formattedValues = CsvUtil.formatCsvValues(unformattedValues, finalDelimiter);
-        System.out.println(CsvUtil.joinStrings(formattedValues, finalDelimiter));
     }
 
 }

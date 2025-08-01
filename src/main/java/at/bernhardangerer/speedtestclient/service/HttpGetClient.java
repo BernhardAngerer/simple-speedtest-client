@@ -14,7 +14,7 @@ import java.util.Objects;
 public final class HttpGetClient extends AbstractHttpClient {
     private static final String GET = "GET";
 
-    public static TransferTestResult partialGetDownloadData(String urlString, long timeoutTime) throws ServerRequestException {
+    public static TransferTestResult partialGetDownloadData(final String urlString, final long timeoutTime) throws ServerRequestException {
         if (urlString != null) {
             int bytesReceived = 0;
             try {
@@ -43,7 +43,7 @@ public final class HttpGetClient extends AbstractHttpClient {
         }
     }
 
-    public static byte[] get(String urlString) throws ServerRequestException {
+    public static byte[] get(final String urlString) throws ServerRequestException {
         if (urlString != null) {
             try {
                 final HttpURLConnection conn = createConnection(new URL(urlString), GET);

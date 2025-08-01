@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractTransferService {
 
-    public static TransferTestResult testTransfer(List<Callable<TransferTestResult>> callables, int threats)
+    public static TransferTestResult testTransfer(final List<Callable<TransferTestResult>> callables, final int threats)
             throws InterruptedException, MissingResultException {
         if (callables != null && !callables.isEmpty() && threats > 0) {
             final List<TransferTestResult> results = Executors.newWorkStealingPool(threats).invokeAll(callables)

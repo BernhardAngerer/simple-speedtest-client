@@ -15,7 +15,8 @@ public final class UploadService extends AbstractTransferService {
     private static final String CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String CONTENT = "content1=";
 
-    public static TransferTestResult testUpload(String serverUrl, UploadSetting settings, int threads, Callback callback)
+    public static TransferTestResult testUpload(final String serverUrl, final UploadSetting settings, final int threads,
+                                                final Callback callback)
             throws InterruptedException, MissingResultException {
         if (serverUrl != null && settings != null && callback != null) {
             final int[] uploadSizes = Arrays.copyOfRange(SIZES, settings.getRatio() - 1, SIZES.length);
@@ -37,7 +38,7 @@ public final class UploadService extends AbstractTransferService {
         }
     }
 
-    static String generateDataString(int size) {
+    static String generateDataString(final int size) {
         if (size > 0) {
             final int multiplier = (int) Math.ceil(size / (float) CHARS.length());
             final StringBuilder dataString = new StringBuilder(CONTENT);

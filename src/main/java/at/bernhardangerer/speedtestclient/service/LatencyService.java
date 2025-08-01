@@ -25,7 +25,7 @@ public final class LatencyService {
     private LatencyService() {
     }
 
-    public static List<Long> testLatency(String serverUrl, int limit) throws ServerRequestException {
+    public static List<Long> testLatency(final String serverUrl, final int limit) throws ServerRequestException {
         if (serverUrl != null && limit > 0) {
             final List<Long> latencies = new ArrayList<>();
             for (int iter = 0; iter < limit; iter++) {
@@ -43,7 +43,7 @@ public final class LatencyService {
         }
     }
 
-    public static Map<Server, LatencyTestResult> findServerLatencies(Map<Double, Server> serverMap) throws MissingResultException {
+    public static Map<Server, LatencyTestResult> findServerLatencies(final Map<Double, Server> serverMap) throws MissingResultException {
         if (serverMap != null && !serverMap.isEmpty()) {
             final int testsPerServer = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Latency.testsPerServer.maxNumber")));
             final Map<Server, LatencyTestResult> results = new HashMap<>();
@@ -67,7 +67,7 @@ public final class LatencyService {
         }
     }
 
-    public static Map.Entry<Server, LatencyTestResult> getFastestServer(Map<Double, Server> serverMap) throws MissingResultException {
+    public static Map.Entry<Server, LatencyTestResult> getFastestServer(final Map<Double, Server> serverMap) throws MissingResultException {
         if (serverMap != null && !serverMap.isEmpty()) {
             return findServerLatencies(serverMap).entrySet().stream()
                     .min(Comparator.comparing(entry -> entry.getValue().getLatency()))
@@ -77,7 +77,7 @@ public final class LatencyService {
         }
     }
 
-    public static double calculateAverage(List<Long> list) throws MissingResultException {
+    public static double calculateAverage(final List<Long> list) throws MissingResultException {
         if (list != null && !list.isEmpty()) {
             if (list.stream()
                     .filter(Objects::nonNull)

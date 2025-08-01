@@ -12,7 +12,7 @@ public final class UploadTask implements Callable<TransferTestResult> {
     private final String dataString;
     private final Callback callback;
 
-    public UploadTask(String url, long timeoutTime, String dataString, Callback callback) {
+    public UploadTask(final String url, final long timeoutTime, final String dataString, final Callback callback) {
         this.url = url;
         this.timeoutTime = timeoutTime;
         this.dataString = dataString;
