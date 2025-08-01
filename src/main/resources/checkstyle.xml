@@ -716,7 +716,7 @@
         </module>
         <module name="CommentsIndentation"/>
         <module name="DescendantToken"/>
-        <module name="FinalParameters" />
+        <module name="FinalParameters"/>
         <module name="Indentation">
             <property name="basicOffset" value="4"/>
             <property name="braceAdjustment" value="0"/>
