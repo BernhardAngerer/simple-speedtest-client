@@ -93,6 +93,14 @@ try {
 }
 ```
 
+#### 📈 Example Output
+```bash
+Download: 156,19 Mbps
+Upload: 16,33 Mbps
+Latency: 21,33 ms
+Server: Timewarp IT Consulting GmbH (Vienna, AT)
+```
+
 ## 📦 Dependency (Maven / Gradle)
 Add the dependency via JitPack:
 https://jitpack.io/private#BernhardAngerer/simple-speedtest-client/3.0.0
