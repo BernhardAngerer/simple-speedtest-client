@@ -12,7 +12,7 @@ public enum DistanceUnit {
 
     private final String abbreviation;
 
-    DistanceUnit(String abbreviation) {
+    DistanceUnit(final String abbreviation) {
         this.abbreviation = abbreviation;
     }
 
