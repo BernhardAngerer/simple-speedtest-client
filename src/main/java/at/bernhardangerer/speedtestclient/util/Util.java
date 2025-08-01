@@ -6,11 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -93,34 +91,6 @@ public final class Util {
         } else {
             throw new IllegalArgumentException();
         }
-    }
-
-    public static String formatCsvValue(final Object value) {
-        return formatCsvValue(value, Constant.COMMA);
-    }
-
-    public static String formatCsvValue(final Object value, final String delimiter) {
-        if (value == null) {
-            return "";
-        }
-
-        final String str;
-        if (value instanceof Double || value instanceof Float || value instanceof BigDecimal) {
-            str = String.format(Locale.US, "%.6f", ((Number) value).doubleValue());
-        } else {
-            str = value.toString();
-        }
-
-        final boolean needsEscaping = str.contains(Constant.DOUBLE_QUOTE)
-                || str.contains(delimiter)
-                || str.contains("\n")
-                || str.contains("\r")
-                || str.startsWith(Constant.SPACE)
-                || str.endsWith(Constant.SPACE);
-        if (needsEscaping) {
-            return Constant.DOUBLE_QUOTE + str.replace(Constant.DOUBLE_QUOTE, "\"\"") + Constant.DOUBLE_QUOTE;
-        }
-        return str;
     }
 
 }

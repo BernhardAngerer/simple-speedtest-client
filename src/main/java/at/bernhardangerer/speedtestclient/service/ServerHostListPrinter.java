@@ -3,7 +3,7 @@ package at.bernhardangerer.speedtestclient.service;
 import at.bernhardangerer.speedtestclient.model.Server;
 import at.bernhardangerer.speedtestclient.model.Servers;
 import at.bernhardangerer.speedtestclient.util.Constant;
-import at.bernhardangerer.speedtestclient.util.Util;
+import at.bernhardangerer.speedtestclient.util.CsvUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.xml.bind.JAXBContext;
@@ -12,7 +12,6 @@ import jakarta.xml.bind.Marshaller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class ServerHostListPrinter {
 
@@ -52,16 +51,13 @@ public final class ServerHostListPrinter {
         final String finalDelimiter = delimiter != null && !delimiter.isEmpty() ? delimiter : Constant.COMMA;
 
         final List<String> keys = Arrays.asList("id", "sponsor", "city", "country", "countryCode", "host", "url", "lat", "lon");
-        System.out.println(String.join(finalDelimiter, keys));
+        System.out.println(CsvUtil.joinStrings(keys, finalDelimiter));
 
         for (final Server s : servers) {
             final List<Object> unformattedValues = Arrays.asList(s.getId(), s.getSponsor(), s.getCity(), s.getCountry(),
                     s.getIsoAlpha2CountryCode(), s.getHost(), s.getUrl(), s.getLat(), s.getLon());
-            final List<String> formattedValues = unformattedValues.stream()
-                    .map(object -> Util.formatCsvValue(object, finalDelimiter))
-                    .collect(Collectors.toList());
-
-            System.out.println(String.join(finalDelimiter, formattedValues));
+            final List<String> formattedValues = CsvUtil.formatCsvValues(unformattedValues, finalDelimiter);
+            System.out.println(CsvUtil.joinStrings(formattedValues, finalDelimiter));
         }
     }
 

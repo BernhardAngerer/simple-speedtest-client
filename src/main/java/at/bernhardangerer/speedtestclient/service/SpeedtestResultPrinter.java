@@ -6,7 +6,7 @@ import at.bernhardangerer.speedtestclient.model.Server;
 import at.bernhardangerer.speedtestclient.model.SpeedtestResult;
 import at.bernhardangerer.speedtestclient.model.TransferTestResult;
 import at.bernhardangerer.speedtestclient.util.Constant;
-import at.bernhardangerer.speedtestclient.util.Util;
+import at.bernhardangerer.speedtestclient.util.CsvUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -17,7 +17,6 @@ import jakarta.xml.bind.Marshaller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class SpeedtestResultPrinter {
 
@@ -62,7 +61,7 @@ public final class SpeedtestResultPrinter {
                 "clientIsp", "clientIspRating", "clientCountry", "serverId", "serverCity", "serverHost", "serverCountry",
                 "serverLat", "serverLon", "serverSponsor", "serverUrl", "latencyMs", "distanceKm", "downloadMbps",
                 "downloadBytes", "downloadDurationMs", "uploadMbps", "uploadBytes", "uploadDurationMs", "shareUrl");
-        System.out.println(String.join(finalDelimiter, keys));
+        System.out.println(CsvUtil.joinStrings(keys, finalDelimiter));
 
         final Client c = speedtestResult.getClient();
         final Server s = speedtestResult.getServer();
@@ -97,11 +96,8 @@ public final class SpeedtestResultPrinter {
                 u != null ? u.getDurationInMs() : null,
                 speedtestResult.getShareUrl()
         );
-        final List<String> formattedValues = unformattedValues.stream()
-                .map(object -> Util.formatCsvValue(object, finalDelimiter))
-                .collect(Collectors.toList());
-
-        System.out.println(String.join(finalDelimiter, formattedValues));
+        final List<String> formattedValues = CsvUtil.formatCsvValues(unformattedValues, finalDelimiter);
+        System.out.println(CsvUtil.joinStrings(formattedValues, finalDelimiter));
     }
 
 }
