@@ -14,7 +14,7 @@ This is a lightweight Java-based implementation inspired by [Matt Martz’s spee
 - Use as a CLI or embed as a Java library
 
 ## 🧰 Requirements
-- Java 11+
+- Java 17+
 - Maven
 
 ## ⚙️ Build Instructions
