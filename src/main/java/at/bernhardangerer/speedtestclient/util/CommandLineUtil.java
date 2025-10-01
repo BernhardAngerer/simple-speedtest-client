@@ -3,10 +3,12 @@ package at.bernhardangerer.speedtestclient.util;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.help.HelpFormatter;
+
+import java.io.IOException;
 
 public final class CommandLineUtil {
     public static final String NO_DOWNLOAD = "noDownload";
@@ -21,7 +23,7 @@ public final class CommandLineUtil {
     private CommandLineUtil() {
     }
 
-    public static CommandLine getCommandLine(final Options options, final String[] args) {
+    public static CommandLine getCommandLine(final Options options, final String[] args) throws IOException {
         final CommandLineParser parser = new DefaultParser();
         CommandLine line = null;
         try {
@@ -39,12 +41,13 @@ public final class CommandLineUtil {
         options.addOption(createOption("s", SHARE, null, "Generate and provide an URL to the speedtest.net share results image"));
         options.addOption(createOption("h", DEDICATED_SERVER_HOST, HOST, "Dedicated server host to run the tests against"));
         options.addOption(createOption("l", LIST_SERVER_HOSTS, null, "Provide a list of server hosts to run the tests against"));
-        options.addOption(createOption("of", OUTPUT_FORMAT, FORMAT, "Output format of results (default: console)\n"
-                + "Available formats:\n"
-                + "console — human-readable output to the console\n"
-                + "json    — machine-readable JSON format\n"
-                + "xml     — machine-readable XML format\n"
-                + "csv     — comma-separated values format"));
+        options.addOption(createOption("of", OUTPUT_FORMAT, FORMAT, """
+                Output format of results (default: console)
+                Available formats:
+                console — human-readable output to the console
+                json    — machine-readable JSON format
+                xml     — machine-readable XML format
+                csv     — comma-separated values format"""));
         return options;
     }
 
@@ -54,12 +57,14 @@ public final class CommandLineUtil {
                 .argName(argName)
                 .desc(description)
                 .hasArg(argName != null)
-                .build();
+                .get();
     }
 
-    private static void help(final Options options) {
-        final HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Optional parameters:", options);
+    private static void help(final Options options) throws IOException {
+        final HelpFormatter formatter = HelpFormatter.builder()
+                .setShowSince(false)
+                .get();
+        formatter.printHelp("Optional parameters:", null, options, null, false);
     }
 
 }

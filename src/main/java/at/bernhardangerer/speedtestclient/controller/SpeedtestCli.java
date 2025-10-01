@@ -28,9 +28,9 @@ public final class SpeedtestCli {
 
     @SuppressWarnings("checkstyle:UncommentedMain")
     public static void main(final String[] args) {
-        final CommandLine cmd = getCommandLine(createOptions(), args);
-        if (cmd != null) {
-            try {
+        try {
+            final CommandLine cmd = getCommandLine(createOptions(), args);
+            if (cmd != null) {
                 OutputFormat outputFormat = OutputFormat.CONSOLE;
                 if (SpeedtestCliService.isValidOptionAndOptionValue(cmd, OUTPUT_FORMAT)) {
                     outputFormat = OutputFormat.fromString(cmd.getParsedOptionValue(OUTPUT_FORMAT).toString().trim());
@@ -58,10 +58,10 @@ public final class SpeedtestCli {
                 if (outputFormat != OutputFormat.CONSOLE) {
                     SpeedtestCliService.processSpeedtestResult(result, outputFormat);
                 }
-            } catch (Exception e) {
-                System.err.println("Sorry, an unexpected exception occurred!");
-                logger.error(e.getMessage(), e);
             }
+        } catch (Exception e) {
+            System.err.println("Sorry, an unexpected exception occurred!");
+            logger.error(e.getMessage(), e);
         }
     }
 

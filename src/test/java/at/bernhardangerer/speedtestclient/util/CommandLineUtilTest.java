@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.DEDICATED_SERVER_HOST;
@@ -17,6 +18,7 @@ import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.NO_DOWNLOA
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.NO_UPLOAD;
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.OUTPUT_FORMAT;
 import static at.bernhardangerer.speedtestclient.util.CommandLineUtil.SHARE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -38,7 +40,7 @@ public final class CommandLineUtilTest {
     }
 
     @Test
-    public void testValidCommandLine() {
+    public void testValidCommandLine() throws IOException {
         final Options options = new Options();
         options.addOption("h", "dedicatedServerHost", true, "Dedicated server host to run the tests against");
 
@@ -55,7 +57,7 @@ public final class CommandLineUtilTest {
     }
 
     @Test
-    public void testInvalidCommandLine() {
+    public void testInvalidCommandLine() throws IOException {
         final Options options = new Options();
         options.addOption("h", "dedicatedServerHost", true, "Dedicated server host to run the tests against");
 
@@ -65,11 +67,15 @@ public final class CommandLineUtilTest {
 
         assertNull(line);
 
-        final String output = outContent.toString();
-        final String expectedOutput = "usage: Optional parameters:\n"
-                + " -h,--dedicatedServerHost <arg>   Dedicated server host to run the tests\n"
-                + "                                  against\n";
-        assertEquals(expectedOutput, output);
+        final String expectedOutput = """
+                 usage:  Optional parameters:
+
+                             Options                              Description             \s
+                 -h, --dedicatedServerHost <arg>     Dedicated server host to run the tests
+                                                      against                             \s
+
+                """;
+        assertThat(outContent.toString()).isEqualToNormalizingNewlines(expectedOutput);
     }
 
     @Test
@@ -100,31 +106,38 @@ public final class CommandLineUtilTest {
     }
 
     @Test
-    void shouldPrintHelpWhenInvalidOptionGiven() {
+    void shouldPrintHelpWhenInvalidOptionGiven() throws IOException {
         final String[] args = {"--unknownOption"};
         final Options options = CommandLineUtil.createOptions();
-        final String expectedOutput = "usage: Optional parameters:\n"
-                + " -h,--dedicatedServerHost <HOST>   Dedicated server host to run the tests\n"
-                + "                                   against\n"
-                + " -l,--listServerHosts              Provide a list of server hosts to run\n"
-                + "                                   the tests against\n"
-                + " -nd,--noDownload                  Do not perform download test\n"
-                + " -nu,--noUpload                    Do not perform upload test\n"
-                + " -of,--outputFormat <FORMAT>       Output format of results (default:\n"
-                + "                                   console)\n"
-                + "                                   Available formats:\n"
-                + "                                   console — human-readable output to the\n"
-                + "                                   console\n"
-                + "                                   json    — machine-readable JSON format\n"
-                + "                                   xml     — machine-readable XML format\n"
-                + "                                   csv     — comma-separated values format\n"
-                + " -s,--share                        Generate and provide an URL to the\n"
-                + "                                   speedtest.net share results image\n";
+        final String expectedOutput = """
+                 usage:  Optional parameters:
+
+                             Options                               Description            \s
+                 -nd, --noDownload                    Do not perform download test        \s
+                 -nu, --noUpload                      Do not perform upload test          \s
+                 -s, --share                          Generate and provide an URL to the  \s
+                                                       speedtest.net share results image  \s
+                 -h, --dedicatedServerHost <HOST>     Dedicated server host to run the    \s
+                                                       tests against                      \s
+                 -l, --listServerHosts                Provide a list of server hosts to run
+                                                       the tests against                  \s
+                 -of, --outputFormat <FORMAT>         Output format of results (default:  \s
+                                                       console)                           \s
+                                                       Available formats:                 \s
+                                                       console — human-readable output to \s
+                                                       the console                        \s
+                                                       json    — machine-readable JSON    \s
+                                                       format                             \s
+                                                       xml     — machine-readable XML     \s
+                                                       format                             \s
+                                                       csv     — comma-separated values   \s
+                                                       format                             \s
+
+                """;
 
         final CommandLine cmd = CommandLineUtil.getCommandLine(options, args);
 
         assertNull(cmd);
-        final String output = outContent.toString();
-        assertEquals(expectedOutput, output);
+        assertThat(outContent.toString()).isEqualToNormalizingNewlines(expectedOutput);
     }
 }

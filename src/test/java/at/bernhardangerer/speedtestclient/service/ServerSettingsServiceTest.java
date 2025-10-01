@@ -18,34 +18,35 @@ public final class ServerSettingsServiceTest {
     @Test
     @SuppressWarnings("checkstyle:VariableDeclarationUsageDistance")
     public void getServersFromXml() throws ParsingException, MissingResultException {
-        final List<Server> result = ServerSettingsService.getServersFromXml(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<settings>\n"
-                + "<servers>\n"
-                + "<server url=\"http://gyor-speedtest.zt.hu:8080/speedtest/upload.php\" lat=\"47.6875\" lon=\"17.6504\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"9720\"  host=\"gyor-speedtest.zt.hu:8080\" />\n"
-                + "<server url=\"http://speedtest.zeg.tarr.hu:8080/speedtest/upload.php\" lat=\"46.8417\" lon=\"16.8416\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"8384\"  host=\"speedtest.zeg.tarr.hu:8080\" />\n"
-                + "<server url=\"http://speedtest.jztkft.hu:8080/speedtest/upload.php\" lat=\"47.4979\" lon=\"19.0402\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"24446\"  host=\"speedtest.jztkft.hu:8080\" />\n"
-                + "<server url=\"http://speedtest.microsystem.hu:8080/speedtest/upload.php\" lat=\"47.5000\" lon=\"19.0500\" "
-                + "name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"36406\"  host=\"speedtest.microsystem.hu:8080\" />\n"
-                + "<server url=\"http://speedtest.szerverplex.hu:8080/speedtest/upload.php\" lat=\"47.5000\" lon=\"19.0500\" "
-                + "name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"4246\"  host=\"speedtest.szerverplex.hu:8080\" />\n"
-                + "<server url=\"http://speedtest2.opcnet.hu:8080/speedtest/upload.php\" lat=\"47.5000\" lon=\"19.0500\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"22794\"  host=\"speedtest2.opcnet.hu:8080\" />\n"
-                + "<server url=\"http://vh1.speedtest.einfra.hu:8080/speedtest/upload.php\" lat=\"47.5000\" lon=\"19.0500\" "
-                + "name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"41561\"  host=\"vh1.speedtest.einfra.hu:8080\" />\n"
-                + "<server url=\"http://nk-speedtest.zt.hu:8080/speedtest/upload.php\" lat=\"46.4500\" lon=\"16.9833\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"9743\"  host=\"nk-speedtest.zt.hu:8080\" />\n"
-                + "<server url=\"http://speedtest.szd.tarr.hu:8080/speedtest/upload.php\" lat=\"46.3560\" lon=\"18.7038\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"4099\"  host=\"speedtest.szd.tarr.hu:8080\" />\n"
-                + "<server url=\"http://pecs-speedtest.zt.hu:8080/speedtest/upload.php\" lat=\"46.0727\" lon=\"18.2323\" name=\"a city\" "
-                + "country=\"Hungary\" cc=\"HU\" sponsor=\"a sponsor\" id=\"9742\"  host=\"pecs-speedtest.zt.hu:8080\" />\n"
-                + "</servers>\n"
-                + "</settings>").getBytes());
+        final List<Server> result = ServerSettingsService.getServersFromXml("""
+                <?xml version="1.0" encoding="UTF-8"?>
+                <settings>
+                <servers>
+                <server url="http://gyor-speedtest.zt.hu:8080/speedtest/upload.php" lat="47.6875" lon="17.6504" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="9720"  host="gyor-speedtest.zt.hu:8080" />
+                <server url="http://speedtest.zeg.tarr.hu:8080/speedtest/upload.php" lat="46.8417" lon="16.8416" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="8384"  host="speedtest.zeg.tarr.hu:8080" />
+                <server url="http://speedtest.jztkft.hu:8080/speedtest/upload.php" lat="47.4979" lon="19.0402" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="24446"  host="speedtest.jztkft.hu:8080" />
+                <server url="http://speedtest.microsystem.hu:8080/speedtest/upload.php" lat="47.5000" lon="19.0500" \
+                name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="36406"  host="speedtest.microsystem.hu:8080" />
+                <server url="http://speedtest.szerverplex.hu:8080/speedtest/upload.php" lat="47.5000" lon="19.0500" \
+                name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="4246"  host="speedtest.szerverplex.hu:8080" />
+                <server url="http://speedtest2.opcnet.hu:8080/speedtest/upload.php" lat="47.5000" lon="19.0500" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="22794"  host="speedtest2.opcnet.hu:8080" />
+                <server url="http://vh1.speedtest.einfra.hu:8080/speedtest/upload.php" lat="47.5000" lon="19.0500" \
+                name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="41561"  host="vh1.speedtest.einfra.hu:8080" />
+                <server url="http://nk-speedtest.zt.hu:8080/speedtest/upload.php" lat="46.4500" lon="16.9833" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="9743"  host="nk-speedtest.zt.hu:8080" />
+                <server url="http://speedtest.szd.tarr.hu:8080/speedtest/upload.php" lat="46.3560" lon="18.7038" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="4099"  host="speedtest.szd.tarr.hu:8080" />
+                <server url="http://pecs-speedtest.zt.hu:8080/speedtest/upload.php" lat="46.0727" lon="18.2323" name="a city" \
+                country="Hungary" cc="HU" sponsor="a sponsor" id="9742"  host="pecs-speedtest.zt.hu:8080" />
+                </servers>
+                </settings>""".getBytes());
         Assertions.assertNotNull(result);
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(10, result.size());

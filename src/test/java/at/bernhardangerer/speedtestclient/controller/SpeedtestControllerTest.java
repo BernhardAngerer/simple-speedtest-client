@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -137,18 +138,19 @@ public final class SpeedtestControllerTest {
             assertEquals(uploadResult, result.getUpload());
             assertEquals("http://share.url", result.getShareUrl());
 
-            final String output = outContent.toString();
-            final String expectedOutput = "Retrieving speedtest.net configuration...\n"
-                    + "Testing from Test ISP (127.0.0.1, AT)...\n"
-                    + "Retrieving speedtest.net server list...\n"
-                    + "Selecting best server based on ping...\n"
-                    + "Hosted by Test Sponsor (Test Server, AT) [12.30 km]: 10.50 ms\n"
-                    + "Testing download speed\n"
-                    + "Download: 50.00 Mbits/s\n"
-                    + "Testing upload speed\n"
-                    + "Upload: 20.00 Mbits/s\n"
-                    + "Share results: http://share.url\n";
-            assertEquals(expectedOutput, output);
+            final String expectedOutput = """
+                    Retrieving speedtest.net configuration...
+                    Testing from Test ISP (127.0.0.1, AT)...
+                    Retrieving speedtest.net server list...
+                    Selecting best server based on ping...
+                    Hosted by Test Sponsor (Test Server, AT) [12.30 km]: 10.50 ms
+                    Testing download speed
+                    Download: 50.00 Mbits/s
+                    Testing upload speed
+                    Upload: 20.00 Mbits/s
+                    Share results: http://share.url
+                    """;
+            assertThat(outContent.toString()).isEqualToNormalizingNewlines(expectedOutput);
         }
     }
 

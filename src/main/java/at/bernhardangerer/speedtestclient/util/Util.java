@@ -32,16 +32,11 @@ public final class Util {
                 dist = Math.acos(dist);
                 dist = Math.toDegrees(dist);
                 dist = dist * 60 * 1.1515; // miles
-                switch (distanceUnit) {
-                    case MILE:
-                        return dist;
-                    case KILOMETER:
-                        return dist * 1.609344;
-                    case NAUTICAL_MILE:
-                        return dist * 0.8684;
-                    default:
-                        throw new UnsupportedUnitException("DistanceUnit " + distanceUnit.name() + " not supported!");
-                }
+                return switch (distanceUnit) {
+                    case MILE -> dist;
+                    case KILOMETER -> dist * 1.609344;
+                    case NAUTICAL_MILE -> dist * 0.8684;
+                };
             }
         } else {
             throw new IllegalArgumentException();
@@ -85,7 +80,7 @@ public final class Util {
                 prop.load(is);
                 return prop.getProperty(key);
             } catch (Exception e) {
-                logger.error("Loading key \"" + key + "\" from property file \"" + resource + "\" was not possible!", e);
+                logger.error("Loading key \"{}\" from property file \"" + resource + "\" was not possible!", key, e);
                 return null;
             }
         } else {

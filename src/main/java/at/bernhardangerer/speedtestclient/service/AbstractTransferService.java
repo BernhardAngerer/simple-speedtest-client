@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public abstract class AbstractTransferService {
 
@@ -25,7 +24,7 @@ public abstract class AbstractTransferService {
                         }
                     })
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
+                    .toList();
             if (results.isEmpty()) {
                 throw new MissingResultException("Empty list for transfer results");
             }

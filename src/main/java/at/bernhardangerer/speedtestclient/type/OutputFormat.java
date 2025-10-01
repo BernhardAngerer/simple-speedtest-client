@@ -14,12 +14,12 @@ public enum OutputFormat {
             throw new IllegalArgumentException("Invalid output format");
         }
 
-        switch (value.toLowerCase()) {
-            case "json": return JSON;
-            case "xml": return XML;
-            case "csv": return CSV;
-            case "console": return CONSOLE;
-            default: throw new IllegalArgumentException("Unknown output format: " + value);
-        }
+        return switch (value.toLowerCase()) {
+            case "json" -> JSON;
+            case "xml" -> XML;
+            case "csv" -> CSV;
+            case "console" -> CONSOLE;
+            default -> throw new IllegalArgumentException("Unknown output format: " + value);
+        };
     }
 }
