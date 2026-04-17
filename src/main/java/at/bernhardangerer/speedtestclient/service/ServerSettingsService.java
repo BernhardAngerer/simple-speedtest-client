@@ -14,6 +14,9 @@ import jakarta.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,13 +44,17 @@ public final class ServerSettingsService {
             try (InputStream is = new ByteArrayInputStream(bytes)) {
                 final JAXBContext jaxbContext = JAXBContext.newInstance(ServerSetting.class);
                 final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                final ServerSetting serverSetting = (ServerSetting) jaxbUnmarshaller.unmarshal(is);
+                final XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+                xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+                xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+                final XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(is);
+                final ServerSetting serverSetting = (ServerSetting) jaxbUnmarshaller.unmarshal(xmlStreamReader);
                 if (serverSetting != null && serverSetting.getServers() != null && serverSetting.getServers().getServerList() != null) {
                     return serverSetting.getServers().getServerList();
                 } else {
                     throw new MissingResultException("Missing server list result");
                 }
-            } catch (IOException | JAXBException e) {
+            } catch (IOException | JAXBException | XMLStreamException e) {
                 throw new ParsingException(e);
             }
         } else {
