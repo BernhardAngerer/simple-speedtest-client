@@ -7,8 +7,9 @@
 # documentation.
 
 name: Java CI with Maven
+
 permissions:
-  contents: read
+  contents: write
 
 on:
   push:
