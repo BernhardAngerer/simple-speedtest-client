@@ -39,7 +39,7 @@ public final class HttpGetClient extends AbstractHttpClient {
                 throw new ServerRequestException(e);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid URL String");
         }
     }
 
@@ -54,7 +54,7 @@ public final class HttpGetClient extends AbstractHttpClient {
                 throw new ServerRequestException(e);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid URL String");
         }
     }
 

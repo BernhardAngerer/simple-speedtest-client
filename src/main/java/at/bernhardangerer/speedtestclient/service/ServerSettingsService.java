@@ -58,7 +58,7 @@ public final class ServerSettingsService {
                 throw new ParsingException(e);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid bytes");
         }
     }
 
@@ -83,7 +83,7 @@ public final class ServerSettingsService {
                 throw new MissingResultException("Empty server list");
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid number of threads per URL");
         }
     }
 

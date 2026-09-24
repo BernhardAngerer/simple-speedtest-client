@@ -45,7 +45,7 @@ public final class UploadService extends AbstractTransferService {
             dataString.append(CHARS.repeat(Math.max(0, multiplier)));
             return dataString.substring(0, size);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid size");
         }
     }
 

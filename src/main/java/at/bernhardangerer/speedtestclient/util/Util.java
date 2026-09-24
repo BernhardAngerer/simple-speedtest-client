@@ -84,7 +84,7 @@ public final class Util {
                 return null;
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid property key!");
         }
     }
 

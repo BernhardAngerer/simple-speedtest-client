@@ -46,7 +46,7 @@ public final class ConfigSettingsService {
                 throw new ParsingException(e);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid XML");
         }
     }
 

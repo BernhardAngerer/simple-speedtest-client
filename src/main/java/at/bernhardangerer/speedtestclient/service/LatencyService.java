@@ -63,7 +63,7 @@ public final class LatencyService {
                 throw new MissingResultException("Empty map for latency tests");
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid server map");
         }
     }
 
@@ -73,7 +73,7 @@ public final class LatencyService {
                     .min(Comparator.comparing(entry -> entry.getValue().getLatency()))
                     .orElseThrow(MissingResultException::new);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid server map");
         }
     }
 
@@ -92,7 +92,7 @@ public final class LatencyService {
                 throw new MissingResultException("Unable to calculate average");
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid List of Latency");
         }
     }
 }

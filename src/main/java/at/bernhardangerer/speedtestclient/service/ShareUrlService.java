@@ -50,7 +50,7 @@ public final class ShareUrlService {
                 return null;
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid data");
         }
     }
 

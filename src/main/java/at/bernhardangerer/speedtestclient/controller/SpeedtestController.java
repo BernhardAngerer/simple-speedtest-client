@@ -127,7 +127,7 @@ public final class SpeedtestController {
                 throw new SpeedtestException(e);
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid distance unit");
         }
     }
 
