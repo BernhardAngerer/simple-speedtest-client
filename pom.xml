@@ -4,7 +4,7 @@
     <groupId>at.bernhardangerer</groupId>
     <artifactId>simple-speedtest-client</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.1</version>
+    <version>3.0.2-SNAPSHOT</version>
     <name>simple-speedtest-client</name>
     <description>simple speedtest client</description>
     <properties>
