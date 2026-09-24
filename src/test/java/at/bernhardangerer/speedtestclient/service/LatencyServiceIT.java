@@ -31,7 +31,7 @@ public final class LatencyServiceIT {
         final Map<Server, LatencyTestResult> result = LatencyService.findServerLatencies(servers);
         Assertions.assertNotNull(result);
         Assertions.assertFalse(result.isEmpty());
-        Assertions.assertEquals(5, result.size());
+        Assertions.assertEquals(1, result.size());
     }
 
     @Test

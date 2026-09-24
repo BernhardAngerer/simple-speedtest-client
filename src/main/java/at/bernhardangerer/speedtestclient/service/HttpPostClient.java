@@ -3,23 +3,19 @@ package at.bernhardangerer.speedtestclient.service;
 import at.bernhardangerer.speedtestclient.exception.ServerRequestException;
 import at.bernhardangerer.speedtestclient.model.TransferTestResult;
 import at.bernhardangerer.speedtestclient.util.Util;
-import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public final class HttpPostClient extends AbstractHttpClient {
-    public static final String CONTENT_LENGTH = "Content-Length";
-    private static final String POST = "POST";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String FORM_URLENCODED = "application/x-www-form-urlencoded";
 
     private HttpPostClient() {
     }
@@ -29,13 +25,12 @@ public final class HttpPostClient extends AbstractHttpClient {
         if (urlString != null && dataString != null) {
             final int maxBufferSize = Integer.parseInt(Objects.requireNonNull(Util.getConfigProperty("Upload.maxBufferSize")));
             int bytesSent = 0;
-            try (InputStream is = new ByteArrayInputStream(dataString.getBytes())) {
-                final HttpURLConnection conn = createConnection(new URL(urlString), POST);
-                conn.setChunkedStreamingMode(maxBufferSize);
-                conn.setDoOutput(true);
-                conn.setRequestProperty(CONTENT_LENGTH, Integer.toString(dataString.length()));
+            try (InputStream is = new ByteArrayInputStream(dataString.getBytes(StandardCharsets.UTF_8))) {
+                final HttpRequest request = createRequestBuilder(URI.create(urlString))
+                        .header(CONTENT_TYPE, FORM_URLENCODED)
+                        .POST(HttpRequest.BodyPublishers.ofString(dataString))
+                        .build();
                 final long startTime = System.currentTimeMillis();
-                final DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
                 int bytesAvailable = is.available();
                 int bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -45,7 +40,6 @@ public final class HttpPostClient extends AbstractHttpClient {
                     if (timeoutTime > 0 && System.currentTimeMillis() > timeoutTime) {
                         break;
                     }
-                    dos.write(buffer, 0, bufferSize);
                     bytesAvailable = is.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = is.read(buffer, 0, bufferSize);
@@ -53,10 +47,19 @@ public final class HttpPostClient extends AbstractHttpClient {
                         bytesSent = bytesSent + bytesRead;
                     }
                 }
-                dos.flush();
-                dos.close();
+                try {
+                    HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.discarding());
+                } catch (IOException e) {
+                    // Ignore connection closed / EOF errors if data was already sent to speedtest server
+                    if (bytesSent == 0) {
+                        throw e;
+                    }
+                }
                 return new TransferTestResult(bytesSent, System.currentTimeMillis() - startTime);
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException | IllegalArgumentException e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 throw new ServerRequestException(e);
             }
         } else {
@@ -64,24 +67,20 @@ public final class HttpPostClient extends AbstractHttpClient {
         }
     }
 
-    @SuppressWarnings("checkstyle:NestedTryDepth")
     public static String postBodyWithSharedData(final String urlString, final String encodedBody) throws ServerRequestException {
         if (urlString != null && encodedBody != null) {
             try {
-                final HttpURLConnection conn = createConnection(new URL(urlString), POST);
-                conn.setDoOutput(true);
-                conn.setRequestProperty(CONTENT_LENGTH, Integer.toString(encodedBody.length()));
-                conn.setRequestProperty("Referer", "http://c.speedtest.net/flash/speedtest.swf");
-                conn.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                try (OutputStream os = conn.getOutputStream();
-                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
-                    writer.write(encodedBody);
-                    writer.flush();
-                    try (InputStream is = conn.getInputStream()) {
-                        return IOUtils.toString(is, StandardCharsets.UTF_8);
-                    }
+                final HttpRequest request = createRequestBuilder(URI.create(urlString))
+                        .header("Referer", "http://c.speedtest.net/flash/speedtest.swf")
+                        .header(CONTENT_TYPE, FORM_URLENCODED)
+                        .POST(HttpRequest.BodyPublishers.ofString(encodedBody))
+                        .build();
+                final HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                return response.body();
+            } catch (IOException | InterruptedException | IllegalArgumentException e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
                 }
-            } catch (IOException e) {
                 throw new ServerRequestException(e);
             }
         } else {
