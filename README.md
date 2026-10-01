@@ -1,5 +1,5 @@
 [![Maven Package](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-publish.yml)
-[![Maven Package](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml/badge.svg)](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml)
+[![Maven Package](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml/badge.svg?branch=main)](https://github.com/BernhardAngerer/simple-speedtest-client/actions/workflows/maven-verify.yml)
 
 # ⏱️ Simple Speedtest-Client
 
